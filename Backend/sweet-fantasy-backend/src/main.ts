@@ -1,8 +1,12 @@
 import { NestFactory } from '@nestjs/core';
+import type { IncomingMessage, RequestListener, ServerResponse } from 'http';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+let cachedServer: RequestListener | undefined;
+
+async function createServer(): Promise<RequestListener> {
   const app = await NestFactory.create(AppModule);
+
   app.enableCors({
     origin: [
       'https://sweet-fantasy-vlas.vercel.app',
@@ -12,6 +16,16 @@ async function bootstrap() {
     methods: ['POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   });
-  await app.listen(process.env.PORT ?? 3000);
+
+  await app.init();
+
+  return app.getHttpAdapter().getInstance() as RequestListener;
 }
-bootstrap();
+
+export default async function handler(
+  req: IncomingMessage,
+  res: ServerResponse,
+) {
+  cachedServer ??= await createServer();
+  return cachedServer(req, res);
+}
