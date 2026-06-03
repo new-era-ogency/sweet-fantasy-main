@@ -1,0 +1,20 @@
+node_modules/
+.DS_Store
+
+# local environment
+.env
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# build output / caches
+dist/
+build/
+.vercel/
+.netlify/
