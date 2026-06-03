@@ -1,0 +1,9 @@
+{
+  "name": "sweet-fantasy-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sweet Fantasy project root for Vercel deployment.",
+  "dependencies": {
+    "@sendgrid/mail": "^8.1.6"
+  }
+}
