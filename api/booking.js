@@ -1,6 +1,4 @@
-const { MailService } = require('@sendgrid/mail');
-
-const mailService = new MailService();
+const sgMail = require('@sendgrid/mail');
 
 function escapeHtml(value) {
   return String(value || '')
@@ -32,40 +30,65 @@ module.exports = async function handler(req, res) {
   }
 
   const apiKey = process.env.SENDGRID_API_KEY;
-  const fromEmail = process.env.SENDGRID_FROM_EMAIL;
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const fromEmail = process.env.FROM_EMAIL;
+  const toEmail = process.env.TO_EMAIL;
 
-  if (!apiKey || !fromEmail || !adminEmail) {
-    sendJson(res, 500, { success: false, message: 'Email configuration is missing' });
+  if (!apiKey || !fromEmail || !toEmail) {
+    sendJson(res, 500, {
+      success: false,
+      error: 'Email configuration is missing',
+      message: 'Email configuration is missing',
+    });
     return;
   }
 
-  if (!isValidEmail(fromEmail) || !isValidEmail(adminEmail)) {
-    sendJson(res, 500, { success: false, message: 'Email configuration is invalid' });
+  if (!isValidEmail(fromEmail) || !isValidEmail(toEmail)) {
+    sendJson(res, 500, {
+      success: false,
+      error: 'Email configuration is invalid',
+      message: 'Email configuration is invalid',
+    });
     return;
   }
 
-  const data = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+  let data;
+  try {
+    data = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : req.body || {};
+  } catch (error) {
+    sendJson(res, 400, {
+      success: false,
+      error: 'Invalid JSON body',
+      message: 'Invalid JSON body',
+    });
+    return;
+  }
+
   const weight = Number(data.weightInKg);
+  const deliveryDateValue = new Date(data.deliveryDate);
 
   if (
     !data.customerName ||
     !isValidEmail(data.customerEmail) ||
     !data.deliveryDate ||
+    Number.isNaN(deliveryDateValue.getTime()) ||
     !Number.isFinite(weight) ||
     weight <= 0 ||
     !data.filling
   ) {
-    sendJson(res, 400, { success: false, message: 'Invalid booking payload' });
+    sendJson(res, 400, {
+      success: false,
+      error: 'Invalid booking payload',
+      message: 'Invalid booking payload',
+    });
     return;
   }
 
-  mailService.setApiKey(apiKey);
+  sgMail.setApiKey(apiKey);
 
   const customerName = escapeHtml(data.customerName);
   const customerEmail = escapeHtml(data.customerEmail);
   const filling = escapeHtml(data.filling);
-  const deliveryDate = new Date(data.deliveryDate).toLocaleDateString('ru-RU');
+  const deliveryDate = deliveryDateValue.toLocaleDateString('ru-RU');
   const designComment = data.designComment ? escapeHtml(data.designComment) : 'Нет комментариев';
 
   const adminHtml = `
@@ -93,14 +116,14 @@ module.exports = async function handler(req, res) {
 
   try {
     await Promise.all([
-      mailService.send({
-        to: adminEmail,
+      sgMail.send({
+        to: toEmail,
         from: fromEmail,
         replyTo: data.customerEmail,
         subject: `Новый заказ торта от ${data.customerName}`,
         html: adminHtml,
       }),
-      mailService.send({
+      sgMail.send({
         to: data.customerEmail,
         from: fromEmail,
         subject: 'Ваш заказ торта принят! | Sweet Fantasy',
@@ -115,6 +138,10 @@ module.exports = async function handler(req, res) {
       status: error.response?.status,
       body: error.response?.body,
     });
-    sendJson(res, 500, { success: false, message: 'Booking email failed' });
+    sendJson(res, 500, {
+      success: false,
+      error: 'Booking email failed',
+      message: error.response?.body?.errors?.[0]?.message || error.message || 'Booking email failed',
+    });
   }
 };

@@ -25,5 +25,5 @@ The booking form posts to `/api/booking`, so email sending works only in an envi
 Set these variables in the hosting provider:
 
 - `SENDGRID_API_KEY`
-- `SENDGRID_FROM_EMAIL`
-- `ADMIN_EMAIL`
+- `FROM_EMAIL`
+- `TO_EMAIL`

@@ -1,9 +1,14 @@
 # Sweet Fantasy Fullstack
 
-Project split into two parts:
+The Vercel production deployment uses the root-level static site and API:
 
-- `frontend/sweet-fantasy-vlas-main` - static landing page with a Vercel-style booking API endpoint
-- `Backend/sweet-fantasy-backend` - NestJS booking API for email notifications
+- `index.html`, `app.js`, `images/` - static website
+- `api/booking.js` - Vercel Serverless Function for cake order emails
+
+The nested folders are kept as source/reference copies:
+
+- `frontend/sweet-fantasy-vlas-main`
+- `Backend/sweet-fantasy-backend`
 
 ## Frontend
 
@@ -22,12 +27,12 @@ cp .env.example .env
 npm run start:dev
 ```
 
-## Environment Variables
+## Vercel Environment Variables
 
-Both email endpoints need:
+The root `/api/booking` endpoint needs:
 
 - `SENDGRID_API_KEY`
-- `SENDGRID_FROM_EMAIL`
-- `ADMIN_EMAIL`
+- `FROM_EMAIL`
+- `TO_EMAIL`
 
 Do not commit real `.env` files. Use `.env.example` as the template.
