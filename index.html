@@ -303,6 +303,7 @@
           <a class="sf-nav-link transition-colors hover:text-ink" href="#menu" x-text="t('navMenu')">Menu</a>
           <a class="sf-nav-link transition-colors hover:text-ink" href="#menu-desserts" x-text="t('navDesserts')">Zaharo cakes</a>
           <a class="sf-nav-link transition-colors hover:text-ink" href="#gallery" x-text="t('navGallery')">Gallery</a>
+          <a class="sf-nav-link transition-colors hover:text-ink" href="#news-events" x-text="t('navNews')">News</a>
           <a class="sf-nav-link transition-colors hover:text-ink" href="#about" x-text="t('navAbout')">About</a>
           <a class="sf-nav-link transition-colors hover:text-ink" href="#contacts" x-text="t('navContacts')">Contacts</a>
         </nav>
@@ -325,6 +326,7 @@
         <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#menu" x-text="t('navMenu')">Menu</a>
         <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#menu-desserts" x-text="t('navDesserts')">Cakes</a>
         <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#gallery" x-text="t('navGallery')">Gallery</a>
+        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#news-events" x-text="t('navNews')">News</a>
         <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#about" x-text="t('navAbout')">About</a>
         <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#contacts" x-text="t('navContacts')">Contacts</a>
       </div>
@@ -665,6 +667,82 @@
                 </article>
               </template>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="news-events" class="scroll-mt-24 border-b border-slate-900/[0.05] bg-gradient-to-b from-bg-cream via-white to-mist/30">
+        <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between" data-reveal="up">
+            <div class="max-w-3xl">
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee" x-text="t('newsEyebrow')">News & events</p>
+              <h2 class="mt-3 font-display text-[clamp(2rem,7vw,3.5rem)] font-semibold leading-tight tracking-[-0.035em] text-primary-ocean" x-text="t('newsTitle')">
+                Fresh updates from Sweet Fantasy
+              </h2>
+              <p class="mt-5 max-w-2xl text-base leading-relaxed text-slate-600" x-text="t('newsIntro')">
+                Seasonal cakes, café moments, tastings, and small events in Sveti Vlas.
+              </p>
+            </div>
+            <p
+              class="rounded-full border border-accent-beige/40 bg-white/80 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.12em] text-brand-coffee shadow-sm"
+              x-show="newsEventsLoading"
+              x-cloak
+              x-text="t('newsLoading')"
+            >
+              Loading latest posts...
+            </p>
+          </div>
+
+          <p
+            class="mt-6 rounded-2xl border border-accent-beige/30 bg-accent-beige/10 px-4 py-3 text-sm font-medium text-brand-coffee"
+            x-show="newsEventsWarning"
+            x-transition
+            x-cloak
+            x-text="newsEventsWarning"
+          ></p>
+
+          <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            <template x-for="(item, idx) in newsEvents" :key="'news-event-' + (item.id || idx)">
+              <article
+                class="group overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-[0_24px_64px_-40px_rgba(15,47,74,0.45)] ring-1 ring-slate-900/[0.05] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_34px_76px_-42px_rgba(15,47,74,0.58)]"
+                data-reveal="up"
+                x-bind:data-reveal-delay="String(Math.min(idx * 70, 280))"
+              >
+                <div class="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-accent-beige/30 via-white to-santorini/20">
+                  <img
+                    class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
+                    loading="lazy"
+                    decoding="async"
+                    width="900"
+                    height="675"
+                    x-bind:src="newsEventImage(item)"
+                    x-bind:alt="localizedNewsValue(item, 'title')"
+                    @error="$event.target.src = './images/interier.png'"
+                  />
+                  <div class="absolute left-4 top-4 flex overflow-hidden rounded-2xl bg-white/92 shadow-lg ring-1 ring-white backdrop-blur">
+                    <div
+                      class="flex min-w-[4.25rem] flex-col items-center justify-center px-3 py-2 text-center"
+                      :class="item.type === 'event' ? 'bg-primary-ocean text-white' : 'bg-accent-beige/90 text-primary-ocean'"
+                    >
+                      <span class="text-xl font-black leading-none tabular-nums" x-text="newsEventDateDay(item)"></span>
+                      <span class="mt-1 text-[10px] font-bold uppercase tracking-[0.16em]" x-text="newsEventDateMonth(item)"></span>
+                    </div>
+                    <div class="flex items-center px-3">
+                      <span
+                        class="rounded-full px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em]"
+                        :class="item.type === 'event' ? 'bg-accent-beige/25 text-primary-ocean' : 'bg-primary-ocean/10 text-primary-ocean'"
+                        x-text="newsEventTypeLabel(item)"
+                      ></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-5 sm:p-6">
+                  <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-coffee" x-text="newsEventDateLine(item)"></p>
+                  <h3 class="mt-3 font-display text-2xl font-semibold leading-tight text-primary-ocean" x-text="localizedNewsValue(item, 'title')"></h3>
+                  <p class="mt-3 line-clamp-4 text-sm leading-relaxed text-slate-600" x-text="localizedNewsValue(item, 'content')"></p>
+                </div>
+              </article>
+            </template>
           </div>
         </div>
       </section>

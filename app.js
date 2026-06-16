@@ -421,6 +421,57 @@
     },
   ]);
 
+  const NEWS_EVENTS_FALLBACK = Object.freeze([
+    {
+      id: 'summer-terrace-weekend',
+      type: 'event',
+      event_date: '2026-07-06T09:00:00.000Z',
+      image_url: './images/twjcupsofcoffe.png',
+      title: {
+        EN: 'Summer terrace breakfast weekend',
+        BG: 'Летен уикенд със закуска на терасата',
+        UA: 'Літній сніданковий вікенд на терасі',
+      },
+      content: {
+        EN: 'Join us for slow seaside mornings with fresh pastry, Richard coffee, and light breakfast specials.',
+        BG: 'Заповядайте за спокойни морски сутрини с прясна закуска, Richard кафе и леки летни предложения.',
+        UA: 'Завітайте на спокійні морські ранки зі свіжою випічкою, кавою Richard і легкими літніми сніданками.',
+      },
+    },
+    {
+      id: 'dubai-pistachio-return',
+      type: 'news',
+      created_at: '2026-06-16T09:00:00.000Z',
+      image_url: './images/photo_phistashko-cake.jpg',
+      title: {
+        EN: 'Dubai pistachio cake is back in the display case',
+        BG: 'Дубайската торта с шамфъстък отново е във витрината',
+        UA: 'Дубайський фісташковий торт знову у вітрині',
+      },
+      content: {
+        EN: 'Crisp kadaif, silky pistachio cream, and glossy chocolate are ready for dine-in slices and takeaway.',
+        BG: 'Хрупкав кадаиф, нежен крем с шамфъстък и гланцов шоколад са готови за хапване на място или за вкъщи.',
+        UA: 'Хрусткий кадаїф, ніжний фісташковий крем і глянцевий шоколад готові для десерту в кафе або з собою.',
+      },
+    },
+    {
+      id: 'custom-cake-consultations',
+      type: 'event',
+      event_date: '2026-07-14T15:00:00.000Z',
+      image_url: './images/photo_BlackGolden_cake.jpg',
+      title: {
+        EN: 'Custom cake consultation afternoon',
+        BG: 'Следобед за консултации за торти по поръчка',
+        UA: 'Післяобідні консультації щодо тортів на замовлення',
+      },
+      content: {
+        EN: 'Bring your idea, colors, and celebration date. We will help shape the cake design and flavor direction.',
+        BG: 'Донесете идея, цветове и дата на празника. Ще помогнем с дизайна и вкусовата посока на тортата.',
+        UA: 'Принесіть ідею, кольори й дату свята. Ми допоможемо з дизайном і смаковим напрямом торта.',
+      },
+    },
+  ]);
+
   function filterProductsByCategory(products, category) {
     if (!category || category === 'Всички') return products;
     return products.filter(function (product) {
@@ -639,8 +690,18 @@
       navDesserts: 'Zaharo cakes',
       navOrderCake: 'Order a cake',
       navGallery: 'Gallery',
+      navNews: 'News',
       navAbout: 'About',
       navContacts: 'Contacts',
+      newsEyebrow: 'News & events',
+      newsTitle: 'Fresh updates from Sweet Fantasy',
+      newsIntro: 'Seasonal cakes, café moments, tastings, and small events in Sveti Vlas.',
+      newsTypeNews: 'News',
+      newsTypeEvent: 'Event',
+      newsEventDate: 'Event date',
+      newsPublished: 'Published',
+      newsLoading: 'Loading latest posts...',
+      newsFallbackNotice: 'Showing featured updates while live posts are loading.',
       tabStandard: 'Standard',
       tabCustom: 'Custom',
       tabVegan: 'Vegan',
@@ -831,8 +892,18 @@
       navDesserts: 'Торти Zaharo',
       navOrderCake: 'Поръчай торта',
       navGallery: 'Галерия',
+      navNews: 'Новини',
       navAbout: 'За нас',
       navContacts: 'Контакти',
+      newsEyebrow: 'Новини и събития',
+      newsTitle: 'Свежи новини от Sweet Fantasy',
+      newsIntro: 'Сезонни торти, кафе моменти, дегустации и малки събития в Свети Влас.',
+      newsTypeNews: 'Новина',
+      newsTypeEvent: 'Събитие',
+      newsEventDate: 'Дата на събитието',
+      newsPublished: 'Публикувано',
+      newsLoading: 'Зареждаме последните публикации...',
+      newsFallbackNotice: 'Показваме избрани новини, докато зареждат публикациите на живо.',
       tabStandard: 'Стандартни',
       tabCustom: 'По поръчка',
       tabVegan: 'Веган',
@@ -1024,8 +1095,18 @@
       navDesserts: 'Торти Zaharo',
       navOrderCake: 'Замовити торт',
       navGallery: 'Галерея',
+      navNews: 'Новини',
       navAbout: 'Про нас',
       navContacts: 'Контакти',
+      newsEyebrow: 'Новини та події',
+      newsTitle: 'Свіжі оновлення від Sweet Fantasy',
+      newsIntro: 'Сезонні торти, кавові моменти, дегустації й невеликі події у Святому Власі.',
+      newsTypeNews: 'Новина',
+      newsTypeEvent: 'Подія',
+      newsEventDate: 'Дата події',
+      newsPublished: 'Опубліковано',
+      newsLoading: 'Завантажуємо останні публікації...',
+      newsFallbackNotice: 'Показуємо вибрані оновлення, поки завантажуються live-публікації.',
       tabStandard: 'Стандартні',
       tabCustom: 'На замовлення',
       tabVegan: 'Веган',
@@ -1239,6 +1320,9 @@
       atmosphereGallery: ATMOSPHERE_GALLERY,
       displayCasePhotos: DISPLAY_CASE_PHOTOS,
       reviews: REVIEWS,
+      newsEvents: NEWS_EVENTS_FALLBACK.slice(),
+      newsEventsLoading: false,
+      newsEventsWarning: '',
 
       galleryModalOpen: false,
       galleryModalSrc: '',
@@ -1297,6 +1381,7 @@
 
         this.bindFabScroll();
         this.bindDessertViewport();
+        this.loadNewsEvents();
 
         window.addEventListener('hashchange', function () {
           self.hashRouterTick++;
@@ -1333,6 +1418,83 @@
         }
         updateDessertViewport();
         window.addEventListener('resize', updateDessertViewport, { passive: true });
+      },
+
+      async loadNewsEvents() {
+        var self = this;
+        this.newsEventsLoading = true;
+        this.newsEventsWarning = this.t('newsFallbackNotice');
+
+        try {
+          var response = await fetch('/api/posts?limit=6', {
+            method: 'GET',
+            headers: { Accept: 'application/json' },
+          });
+          if (!response.ok) throw new Error('Posts API unavailable');
+
+          var data = await response.json();
+          if (data && Array.isArray(data.posts) && data.posts.length) {
+            this.newsEvents = data.posts;
+            this.newsEventsWarning = '';
+            queueMicrotask(function () {
+              if (typeof window.__sfRevealRefresh === 'function') window.__sfRevealRefresh();
+            });
+          }
+        } catch (_) {
+          this.newsEvents = NEWS_EVENTS_FALLBACK.slice();
+        } finally {
+          this.newsEventsLoading = false;
+          setTimeout(function () {
+            if (self.newsEventsWarning === self.t('newsFallbackNotice')) self.newsEventsWarning = '';
+          }, 4500);
+        }
+      },
+
+      localizedNewsValue(item, field) {
+        var value = item && item[field];
+        if (value && typeof value === 'object') {
+          return value[this.lang] || value.EN || value.BG || value.UA || '';
+        }
+        return value ? String(value) : '';
+      },
+
+      newsEventTypeLabel(item) {
+        return item && item.type === 'event' ? this.t('newsTypeEvent') : this.t('newsTypeNews');
+      },
+
+      newsEventDateSource(item) {
+        if (!item) return '';
+        return item.type === 'event' ? item.event_date : item.created_at;
+      },
+
+      newsEventDateDay(item) {
+        var source = this.newsEventDateSource(item);
+        var date = source ? new Date(source) : null;
+        if (!date || Number.isNaN(date.getTime())) return 'SF';
+        return date.toLocaleDateString(docLang(this.lang), { day: '2-digit' });
+      },
+
+      newsEventDateMonth(item) {
+        var source = this.newsEventDateSource(item);
+        var date = source ? new Date(source) : null;
+        if (!date || Number.isNaN(date.getTime())) return 'News';
+        return date.toLocaleDateString(docLang(this.lang), { month: 'short' });
+      },
+
+      newsEventDateLine(item) {
+        var source = this.newsEventDateSource(item);
+        var date = source ? new Date(source) : null;
+        var prefix = item && item.type === 'event' ? this.t('newsEventDate') : this.t('newsPublished');
+        if (!date || Number.isNaN(date.getTime())) return prefix;
+        return prefix + ': ' + date.toLocaleDateString(docLang(this.lang), {
+          day: '2-digit',
+          month: 'long',
+          year: 'numeric',
+        });
+      },
+
+      newsEventImage(item) {
+        return (item && (item.image_url || item.image)) || './images/interier.png';
       },
 
       acceptCookies() {
