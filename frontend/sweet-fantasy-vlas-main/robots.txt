@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sweetfantasy.bg/sitemap.xml
+Sitemap: https://sweet-fantasy-vlas.vercel.app/sitemap.xml

@@ -233,6 +233,122 @@
 
   const RICHARD_PRODUCT_CATEGORIES = Object.freeze(['Всички', 'Зърна', 'Дози E.S.E', 'Капсули Nespresso', 'Чай Био', 'Горещ шоколад']);
 
+  /**
+   * @typedef {Readonly<{
+   *   id: string;
+   *   title: Readonly<{ bg: string; en: string }>;
+   *   note?: Readonly<{ bg: string; en: string }>;
+   *   items: readonly Readonly<{
+   *     id: string;
+   *     title: Readonly<{ bg: string; en: string }>;
+   *     volume: string;
+   *     priceEUR: number;
+   *   }>[];
+   * }>} CafeMenuCategory
+   */
+
+  /** @type {readonly CafeMenuCategory[]} */
+  const CAFE_MENU_CATEGORIES = Object.freeze([
+    {
+      id: 'cafe-richard',
+      title: { bg: 'Cafe Richard', en: 'Cafe Richard' },
+      note: { bg: '100% арабика', en: '100% arabica' },
+      items: [
+        { id: 'florio', title: { bg: 'Флорио', en: 'Florio' }, volume: '50-100ml', priceEUR: 1.7 },
+        {
+          id: 'decaf-moka-hazelnut',
+          title: { bg: 'Без кофеин, Мока лешник', en: 'Decaffeinated, Moka, Hazelnut' },
+          volume: '50-100ml',
+          priceEUR: 2.2,
+        },
+        {
+          id: 'single-origin',
+          title: { bg: 'Колумбия, Етиопия, Коста Рика', en: 'Colombia, Ethiopia, Costa Rica' },
+          volume: '50-100ml',
+          priceEUR: 2,
+        },
+        { id: 'americano', title: { bg: 'Кафе Американо', en: 'Espresso Americano' }, volume: '200ml', priceEUR: 2 },
+        { id: 'cappuccino', title: { bg: 'Капучино класик', en: 'Cappuccino' }, volume: '200ml', priceEUR: 2.8 },
+        { id: 'latte-classic', title: { bg: 'Лате класик', en: 'Latte Classic' }, volume: '200ml', priceEUR: 3 },
+        { id: 'hot-chocolate', title: { bg: 'Горещ шоколад', en: 'Hot chocolate' }, volume: '200ml', priceEUR: 3 },
+        { id: 'white-coffee', title: { bg: 'Кафе с мляко', en: 'White coffee' }, volume: '180ml', priceEUR: 2.2 },
+        { id: 'iced-latte', title: { bg: 'Ледено лате', en: 'Iced latte' }, volume: '200ml', priceEUR: 3.2 },
+        { id: 'frappe', title: { bg: 'Фрапе', en: 'Frappe' }, volume: '200ml', priceEUR: 3.2 },
+      ],
+    },
+    {
+      id: 'milkshake',
+      title: { bg: 'Млечен шейк', en: 'Milkshake' },
+      items: [
+        { id: 'strawberry-raspberries', title: { bg: 'Ягода, малини', en: 'Strawberry, raspberries' }, volume: '350ml', priceEUR: 3.5 },
+        { id: 'chocolate-caramel', title: { bg: 'Шоколад, карамел', en: 'Chocolate, caramel' }, volume: '350ml', priceEUR: 3.5 },
+        { id: 'honey', title: { bg: 'Пчелен мед', en: 'Honey' }, volume: '350ml', priceEUR: 3.5 },
+        {
+          id: 'iced-latte-caramel',
+          title: { bg: 'Ледено лате с карамел', en: 'Iced latte with caramel' },
+          volume: '300ml',
+          priceEUR: 3.5,
+        },
+      ],
+    },
+    {
+      id: 'lemonade',
+      title: { bg: 'Лимонада', en: 'Lemonade' },
+      items: [
+        { id: 'lemon-orange', title: { bg: 'Лимон и портокал', en: 'Lemon and orange' }, volume: '500ml', priceEUR: 3.5 },
+        { id: 'mojito', title: { bg: 'Мохито', en: 'Mojito' }, volume: '250ml', priceEUR: 3.5 },
+      ],
+    },
+    {
+      id: 'tea-richard-black',
+      title: { bg: 'Чай Ришар', en: 'Tea Richard' },
+      note: { bg: 'Черен чай', en: 'Black tea' },
+      items: [
+        {
+          id: 'darjeeling-gardens',
+          title: { bg: 'Градините на Даржилинг', en: 'The gardens of Darjeeling' },
+          volume: '400ml',
+          priceEUR: 2.3,
+        },
+        {
+          id: 'grand-earl-grey',
+          title: { bg: 'Гранд ърл грей (бергамот)', en: 'Grand earl gray (bergamot)' },
+          volume: '400ml',
+          priceEUR: 2.3,
+        },
+        { id: 'vanilla-caramel', title: { bg: 'Ванилия и карамел', en: 'Vanilla and caramel' }, volume: '400ml', priceEUR: 2.3 },
+      ],
+    },
+    {
+      id: 'tea-richard-green',
+      title: { bg: 'Чай Ришар', en: 'Tea Richard' },
+      note: { bg: 'Зелен чай', en: 'Green tea' },
+      items: [
+        {
+          id: 'green-tea-selection',
+          title: {
+            bg: 'Мента, Зелен чай с био цитруси, Бял чай роза и личи',
+            en: 'Mint, green tea with organic citrus, white tea rose and lychee',
+          },
+          volume: '400ml',
+          priceEUR: 2.5,
+        },
+      ],
+    },
+    {
+      id: 'fresh-juice',
+      title: { bg: 'Фреш', en: 'Fresh juice' },
+      items: [
+        {
+          id: 'forest-fruits-vegetables',
+          title: { bg: 'Фреш с горски плодове и зеленчуци', en: 'Fresh juice with forest fruits and vegetables' },
+          volume: '300ml',
+          priceEUR: 3.5,
+        },
+      ],
+    },
+  ]);
+
   const FEATURED_DESSERTS = Object.freeze([
     {
       title: 'Dubai Pistachio Cake',
@@ -1117,6 +1233,7 @@
       lang: 'EN',
       languages: LANGUAGES,
       i18n: i18n,
+      cafeMenuCategories: CAFE_MENU_CATEGORIES,
       featuredDesserts: FEATURED_DESSERTS,
       coffeeMoments: COFFEE_MOMENTS,
       atmosphereGallery: ATMOSPHERE_GALLERY,

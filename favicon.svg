@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sweet Fantasy">
+  <rect width="64" height="64" rx="18" fill="#0f2f4a"/>
+  <path d="M18 36c0-7.7 6.3-14 14-14s14 6.3 14 14v2H18v-2Z" fill="#fbf7ef"/>
+  <path d="M20 38h24v5a5 5 0 0 1-5 5H25a5 5 0 0 1-5-5v-5Z" fill="#d8bf9a"/>
+  <path d="M23 27c2.4-5 7.4-8 13-6.8 1.8.4 3.4 1.2 4.8 2.4-2.2-3.8-6.3-6.4-11-6.4-7 0-12.7 5.7-12.7 12.7v1.6c1.3-1.5 3.3-2.8 5.9-3.5Z" fill="#fff7ed" opacity=".85"/>
+  <circle cx="42" cy="22" r="3" fill="#7eb3d0"/>
+  <path d="M23 50h18" stroke="#fbf7ef" stroke-width="3" stroke-linecap="round"/>
+</svg>

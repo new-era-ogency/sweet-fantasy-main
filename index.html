@@ -3,21 +3,44 @@
 <head> 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sweet Fantasy — Coffee &amp; Desserts | Sveti Vlas, Bulgaria</title>
+  <title>Sweet Fantasy — Dessert, Coffee, Breakfast &amp; Cake Shop in Sveti Vlas</title>
   <meta
     name="description"
-    content="Sweet Fantasy — boutique café and custom cakes in Sveti Vlas, Bulgaria. Richard coffee, desserts, and cake orders for the Bulgarian market."
+    content="Sweet Fantasy is a cozy cake shop in Sveti Vlas for homemade desserts, specialty coffee, breakfast, and custom cakes minutes from the sea."
+  />
+  <meta
+    name="keywords"
+    content="dessert Sveti Vlas, coffee Sveti Vlas, breakfast Sveti Vlas, cake shop Sveti Vlas, Sweet Fantasy Sveti Vlas, custom cakes Bulgaria"
   />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://sweetfantasy.bg/" />
+  <link rel="canonical" href="https://sweet-fantasy-vlas.vercel.app/" />
+  <meta name="theme-color" content="#0f2f4a" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Sweet Fantasy — Dessert, Coffee, Breakfast & Cake Shop in Sveti Vlas" />
+  <meta
+    property="og:description"
+    content="Homemade desserts, specialty coffee, breakfast, and custom cakes in a cozy seaside café in Sveti Vlas."
+  />
+  <meta property="og:image" content="https://sweet-fantasy-vlas.vercel.app/images/interier.png" />
+  <meta property="og:url" content="https://sweet-fantasy-vlas.vercel.app/" />
+  <meta property="og:site_name" content="Sweet Fantasy" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Sweet Fantasy — Dessert, Coffee, Breakfast & Cake Shop in Sveti Vlas" />
+  <meta
+    name="twitter:description"
+    content="Homemade desserts, specialty coffee, breakfast, and custom cakes minutes from the sea in Sveti Vlas."
+  />
+  <meta name="twitter:image" content="https://sweet-fantasy-vlas.vercel.app/images/interier.png" />
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": ["Bakery", "CafeOrCoffeeShop"],
       "name": "Sweet Fantasy",
       "description": "Boutique café, artisan desserts and custom cakes in Sveti Vlas, Bulgaria.",
-      "url": "https://sweetfantasy.bg/",
-      "image": "https://sweetfantasy.bg/images/interier.png",
+      "url": "https://sweet-fantasy-vlas.vercel.app/",
+      "image": "https://sweet-fantasy-vlas.vercel.app/images/interier.png",
       "telephone": "+359876889232",
       "priceRange": "$$",
       "currenciesAccepted": "BGN",
@@ -470,6 +493,48 @@
                 </div>
               </article>
             </template>
+          </div>
+
+          <div class="mt-14 rounded-[2rem] border border-slate-900/[0.06] bg-white/95 p-5 shadow-[0_24px_70px_-44px_rgba(15,47,74,0.4)] ring-1 ring-white sm:p-7 lg:p-9">
+            <div class="flex flex-col gap-4 border-b border-slate-900/[0.06] pb-6 sm:flex-row sm:items-end sm:justify-between">
+              <div class="max-w-2xl">
+                <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee">Cafe menu</p>
+                <h3 class="mt-2 font-display text-[clamp(1.75rem,6vw,3rem)] font-semibold leading-tight tracking-[-0.03em] text-primary-ocean">
+                  Coffee, milkshakes, lemonades, tea, and fresh juice.
+                </h3>
+              </div>
+              <p class="max-w-md text-sm leading-relaxed text-slate-600">
+                Bulgarian and English names are kept separate so the menu is easy to localize later.
+              </p>
+            </div>
+
+            <div class="mt-7 grid gap-5 lg:grid-cols-2">
+              <template x-for="category in cafeMenuCategories" :key="category.id">
+                <section class="rounded-[1.5rem] border border-slate-900/[0.06] bg-gradient-to-br from-bg-cream via-white to-white p-4 shadow-sm sm:p-5">
+                  <div class="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <p class="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-coffee" x-text="category.title.en"></p>
+                      <h4 class="mt-1 font-display text-2xl font-semibold leading-tight text-primary-ocean" x-text="category.title.bg"></h4>
+                      <p class="mt-1 text-sm font-medium text-slate-500" x-show="category.note" x-text="category.note ? category.note.en + ' / ' + category.note.bg : ''"></p>
+                    </div>
+                    <span class="rounded-full bg-primary-ocean px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white" x-text="category.items.length + ' items'"></span>
+                  </div>
+
+                  <ul class="mt-5 divide-y divide-slate-900/[0.06]" role="list">
+                    <template x-for="item in category.items" :key="item.id">
+                      <li class="grid gap-3 py-4 sm:grid-cols-[1fr_auto] sm:items-start">
+                        <div class="min-w-0">
+                          <p class="font-semibold leading-snug text-slate-900" x-text="item.title.bg"></p>
+                          <p class="mt-1 text-sm leading-snug text-slate-500" x-text="item.title.en"></p>
+                          <p class="mt-2 inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-brand-coffee ring-1 ring-slate-900/[0.07]" x-text="item.volume"></p>
+                        </div>
+                        <p class="flex min-h-11 min-w-20 items-center justify-center rounded-full bg-accent-beige/30 px-4 text-base font-bold tabular-nums text-primary-ocean sm:justify-end" x-text="'€' + Number(item.priceEUR).toFixed(2)"></p>
+                      </li>
+                    </template>
+                  </ul>
+                </section>
+              </template>
+            </div>
           </div>
         </div>
       </section>
@@ -1622,6 +1687,9 @@
             rel="noopener noreferrer"
             x-text="t('footerFacebook')"
           >Facebook</a>
+          <a class="hover:text-santorini-deep" href="/support.html">Support</a>
+          <a class="hover:text-santorini-deep" href="/privacy.html">Privacy</a>
+          <a class="hover:text-santorini-deep" href="/terms.html">Terms</a>
         </p>
       </div>
     </footer>
