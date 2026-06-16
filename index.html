@@ -111,12 +111,56 @@
   <style>
     [x-cloak]{display:none !important}
 
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     html {
+      max-width: 100%;
+      overflow-x: hidden;
       scroll-padding-top: 5.75rem;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
       font-feature-settings: 'kern' 1, 'liga' 1;
+      max-width: 100%;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+    }
+
+    img,
+    video,
+    canvas {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+      font-size: 16px;
+    }
+
+    button,
+    a,
+    input,
+    select,
+    textarea {
+      touch-action: manipulation;
+    }
+
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+      min-height: 44px;
     }
 
     ::selection {
@@ -154,8 +198,20 @@
       opacity: 0.75;
       transition: width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .sf-nav-link:hover::after {
+    .sf-nav-link:focus-visible::after {
       width: 100%;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .sf-nav-link:hover::after {
+        width: 100%;
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .group:hover img,
+      .sf-hero-img-wrap:hover .sf-hero-img {
+        transform: none !important;
+      }
     }
 
     @keyframes sf-hero-rise {
@@ -266,6 +322,16 @@
       }
     }
 
+    @media (max-width: 480px) {
+      html {
+        scroll-padding-top: 4.75rem;
+      }
+      .sf-section {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+    }
+
     .sf-gdpr-check {
       accent-color: #161a1f;
     }
@@ -287,25 +353,25 @@
     }
   </style>
 </head>
-<body class="bg-cream pb-28 text-slate-800 antialiased font-sans sm:pb-0">
+<body class="overflow-x-hidden bg-cream pb-28 text-slate-800 antialiased font-sans sm:pb-0">
   <div
     id="app"
-    class="min-h-screen"
+    class="min-h-screen overflow-x-hidden"
     x-data="sweetFantasy()"
     x-init="init()"
   >
-    <header class="sf-header-loaded sticky top-0 z-40 border-b border-slate-900/[0.06] bg-cream/88 backdrop-blur-xl backdrop-saturate-150">
+    <header class="sf-header-loaded sticky top-0 z-40 border-b border-slate-900/[0.06] bg-cream/88 backdrop-blur-xl backdrop-saturate-150" @keydown.escape.window="closeMobileNav()">
       <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 lg:px-10">
-        <a href="#top" class="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">
+        <a href="#top" class="inline-flex min-h-11 items-center font-display text-lg font-semibold tracking-tight text-ink sm:text-xl" @click="closeMobileNav()">
           Sweet Fantasy
         </a>
         <nav class="hidden items-center gap-8 text-[13px] font-semibold uppercase tracking-[0.18em] text-slate-600 md:flex" aria-label="Main">
-          <a class="sf-nav-link transition-colors hover:text-ink" href="#menu" x-text="t('navMenu')">Menu</a>
-          <a class="sf-nav-link transition-colors hover:text-ink" href="#menu-desserts" x-text="t('navDesserts')">Zaharo cakes</a>
-          <a class="sf-nav-link transition-colors hover:text-ink" href="#gallery" x-text="t('navGallery')">Gallery</a>
-          <a class="sf-nav-link transition-colors hover:text-ink" href="#news-events" x-text="t('navNews')">News</a>
-          <a class="sf-nav-link transition-colors hover:text-ink" href="#about" x-text="t('navAbout')">About</a>
-          <a class="sf-nav-link transition-colors hover:text-ink" href="#contacts" x-text="t('navContacts')">Contacts</a>
+          <a class="sf-nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink" href="#menu" x-text="t('navMenu')">Menu</a>
+          <a class="sf-nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink" href="#menu-desserts" x-text="t('navDesserts')">Zaharo cakes</a>
+          <a class="sf-nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink" href="#gallery" x-text="t('navGallery')">Gallery</a>
+          <a class="sf-nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink" href="#news-events" x-text="t('navNews')">News</a>
+          <a class="sf-nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink" href="#about" x-text="t('navAbout')">About</a>
+          <a class="sf-nav-link inline-flex min-h-11 items-center transition-colors hover:text-ink" href="#contacts" x-text="t('navContacts')">Contacts</a>
         </nav>
         <div class="flex items-center gap-3">
           <span class="hidden text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400 sm:inline" x-text="t('langLabel')">Language</span>
@@ -313,26 +379,47 @@
             <template x-for="code in languages" :key="code">
               <button
                 type="button"
-                class="rounded-full px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide transition sm:px-3.5"
+                class="min-h-9 rounded-full px-2.5 py-1.5 text-[11px] font-bold uppercase tracking-wide transition sm:min-h-10 sm:px-3.5"
                 :class="lang === code ? 'bg-ink text-white shadow-sm' : 'text-slate-600 hover:text-ink'"
                 @click="setLang(code)"
                 x-text="code"
               ></button>
             </template>
           </div>
+          <button
+            type="button"
+            class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-slate-900/10 bg-white/85 text-ink shadow-sm transition active:scale-95 md:hidden"
+            aria-controls="mobile-nav"
+            x-bind:aria-expanded="mobileNavOpen ? 'true' : 'false'"
+            x-bind:aria-label="mobileNavOpen ? 'Close navigation' : 'Open navigation'"
+            @click="toggleMobileNav()"
+          >
+            <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path x-show="!mobileNavOpen" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16" />
+              <path x-show="mobileNavOpen" stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
         </div>
       </div>
-      <div class="flex flex-wrap gap-2 border-t border-slate-900/[0.05] bg-cream/95 px-4 py-2.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-slate-600 md:hidden">
-        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#menu" x-text="t('navMenu')">Menu</a>
-        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#menu-desserts" x-text="t('navDesserts')">Cakes</a>
-        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#gallery" x-text="t('navGallery')">Gallery</a>
-        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#news-events" x-text="t('navNews')">News</a>
-        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#about" x-text="t('navAbout')">About</a>
-        <a class="rounded-full bg-white px-3.5 py-1.5 ring-1 ring-slate-900/10" href="#contacts" x-text="t('navContacts')">Contacts</a>
+      <div
+        id="mobile-nav"
+        class="border-t border-slate-900/[0.05] bg-cream/95 px-4 py-3 shadow-sm md:hidden"
+        x-show="mobileNavOpen"
+        x-transition.origin.top.duration.180ms
+        x-cloak
+      >
+        <nav class="grid grid-cols-2 gap-2 text-[12px] font-bold uppercase tracking-[0.12em] text-slate-600" aria-label="Mobile main">
+          <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3.5 py-2 text-center ring-1 ring-slate-900/10 active:scale-[0.98]" href="#menu" @click="closeMobileNav()" x-text="t('navMenu')">Menu</a>
+          <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3.5 py-2 text-center ring-1 ring-slate-900/10 active:scale-[0.98]" href="#menu-desserts" @click="closeMobileNav()" x-text="t('navDesserts')">Cakes</a>
+          <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3.5 py-2 text-center ring-1 ring-slate-900/10 active:scale-[0.98]" href="#gallery" @click="closeMobileNav()" x-text="t('navGallery')">Gallery</a>
+          <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3.5 py-2 text-center ring-1 ring-slate-900/10 active:scale-[0.98]" href="#news-events" @click="closeMobileNav()" x-text="t('navNews')">News</a>
+          <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3.5 py-2 text-center ring-1 ring-slate-900/10 active:scale-[0.98]" href="#about" @click="closeMobileNav()" x-text="t('navAbout')">About</a>
+          <a class="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-3.5 py-2 text-center ring-1 ring-slate-900/10 active:scale-[0.98]" href="#contacts" @click="closeMobileNav()" x-text="t('navContacts')">Contacts</a>
+        </nav>
       </div>
     </header>
 
-    <main id="top">
+    <main id="top" class="overflow-x-hidden">
       <section
         class="relative min-h-[min(100dvh,56rem)] overflow-hidden border-b border-slate-900/[0.06] bg-cream"
         aria-labelledby="hero-heading"
@@ -1380,7 +1467,7 @@
     </main>
 
     <div
-      class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-10"
+      class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-3 sm:p-10"
       x-show="galleryModalOpen"
       x-cloak
       x-transition.opacity.duration.200ms
@@ -1397,10 +1484,10 @@
         x-bind:aria-label="t('galleryModalClose')"
       ></button>
 
-      <div class="relative z-10 mx-auto flex w-full max-w-[min(96vw,1200px)] flex-col gap-5" x-show="galleryModalOpen">
+      <div class="relative z-10 mx-auto flex w-full max-w-[min(96vw,1200px)] flex-col gap-4 sm:gap-5" x-show="galleryModalOpen">
         <div class="relative flex overflow-hidden rounded-xl border border-white/30 bg-black/35 shadow-[0_30px_80px_-28px_rgba(0,0,0,0.55)] ring-1 ring-santorini/35">
           <img
-            class="max-h-[min(92vh,calc(100vh-180px))] w-full cursor-default object-contain"
+            class="max-h-[min(82vh,calc(100vh-150px))] w-full cursor-default object-contain sm:max-h-[min(92vh,calc(100vh-180px))]"
             decoding="async"
             x-bind:src="galleryModalSrc"
             x-bind:alt="galleryModalCaption"
@@ -1415,7 +1502,7 @@
           ></p>
           <button
             type="button"
-            class="shrink-0 rounded-full border border-white/30 bg-white/15 px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-sm transition hover:border-white hover:bg-white/25"
+            class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-sm transition hover:border-white hover:bg-white/25"
             @click="closeGalleryModal()"
             x-text="t('galleryModalClose')"
           >
@@ -1792,7 +1879,7 @@
         </p>
         <button
           type="button"
-          class="shrink-0 rounded-full bg-ink px-8 py-2.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-slate-900"
+          class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-full bg-ink px-8 py-2.5 text-[12px] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-slate-900"
           @click="acceptCookies()"
           x-text="t('cookieOk')"
         >

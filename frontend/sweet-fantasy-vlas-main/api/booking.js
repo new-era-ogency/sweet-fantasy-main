@@ -30,8 +30,8 @@ module.exports = async function handler(req, res) {
   }
 
   const apiKey = process.env.SENDGRID_API_KEY;
-  const fromEmail = process.env.FROM_EMAIL;
-  const toEmail = process.env.TO_EMAIL;
+  const fromEmail = process.env.FROM_EMAIL || process.env.SENDGRID_FROM_EMAIL;
+  const toEmail = process.env.TO_EMAIL || process.env.SENDGRID_TO_EMAIL || process.env.ADMIN_EMAIL;
 
   if (!apiKey || !fromEmail || !toEmail) {
     sendJson(res, 500, {

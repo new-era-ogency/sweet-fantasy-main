@@ -1323,6 +1323,7 @@
       newsEvents: NEWS_EVENTS_FALLBACK.slice(),
       newsEventsLoading: false,
       newsEventsWarning: '',
+      mobileNavOpen: false,
 
       galleryModalOpen: false,
       galleryModalSrc: '',
@@ -1381,6 +1382,7 @@
 
         this.bindFabScroll();
         this.bindDessertViewport();
+        this.bindMobileNavViewport();
         this.loadNewsEvents();
 
         window.addEventListener('hashchange', function () {
@@ -1418,6 +1420,23 @@
         }
         updateDessertViewport();
         window.addEventListener('resize', updateDessertViewport, { passive: true });
+      },
+
+      bindMobileNavViewport() {
+        var self = this;
+        function closeOnDesktop() {
+          if (window.innerWidth >= 768) self.mobileNavOpen = false;
+        }
+        closeOnDesktop();
+        window.addEventListener('resize', closeOnDesktop, { passive: true });
+      },
+
+      toggleMobileNav() {
+        this.mobileNavOpen = !this.mobileNavOpen;
+      },
+
+      closeMobileNav() {
+        this.mobileNavOpen = false;
       },
 
       async loadNewsEvents() {
