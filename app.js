@@ -233,6 +233,78 @@
 
   const RICHARD_PRODUCT_CATEGORIES = Object.freeze(['Всички', 'Зърна', 'Дози E.S.E', 'Капсули Nespresso', 'Чай Био', 'Горещ шоколад']);
 
+  const FEATURED_DESSERTS = Object.freeze([
+    {
+      title: 'Dubai Pistachio Cake',
+      description: 'Crisp kadaif, pistachio cream, and glossy chocolate texture.',
+      src: './images/photo_phistashko-cake.jpg',
+      alt: 'Close-up of Dubai pistachio cake with chocolate and pistachio cream',
+    },
+    {
+      title: 'Garash Chocolate Layers',
+      description: 'A rich Bulgarian classic with walnut layers and dark ganache.',
+      src: './images/photo_kutia32.jpg',
+      alt: 'Chocolate Garash cake close-up with layered texture',
+    },
+    {
+      title: 'Custom Celebration Cakes',
+      description: 'Elegant handmade cakes for birthdays, weddings, and seaside holidays.',
+      src: './images/photo_BlackGolden_cake.jpg',
+      alt: 'Black and gold custom celebration cake by Sweet Fantasy',
+    },
+  ]);
+
+  const COFFEE_MOMENTS = Object.freeze([
+    {
+      title: 'Morning Espresso Ritual',
+      description: 'A calm coffee stop before the beach walk.',
+      src: './images/twjcupsofcoffe.png',
+      alt: 'Two coffees served at Sweet Fantasy in Sveti Vlas',
+      layout: 'wide',
+    },
+    {
+      title: 'Soft Café Table Moments',
+      description: 'Dessert, coffee, and quiet light for slow mornings.',
+      src: './images/coolpic.png',
+      alt: 'Coffee and dessert table moment in warm café light',
+      layout: 'tall',
+    },
+  ]);
+
+  const ATMOSPHERE_GALLERY = Object.freeze([
+    { category: 'desserts', src: './images/chjcjcake.png', alt: 'Display case with cakes and dessert slices', title: 'Fresh display case' },
+    { category: 'coffee', src: './images/twjcupsofcoffe.png', alt: 'Two takeaway coffees for a seaside walk', title: 'Coffee to go' },
+    { category: 'interior', src: './images/interier.png', alt: 'Sweet Fantasy café interior in Santorini blue tones', title: 'Cozy interior' },
+    { category: 'desserts', src: './images/twocakes.png', alt: 'Cupcakes and small sweets on a café table', title: 'Sweet table details' },
+    { category: 'desserts', src: './images/twocackes.png', alt: 'Pastry and viennoiserie on soft linen', title: 'Morning pastry' },
+    { category: 'cakes', src: './images/photo_Graduation-rect.jpg', alt: 'Graduation cake with berries and macarons', title: 'Celebration cakes' },
+    { category: 'cakes', src: './images/photo_white-S1812.jpg', alt: 'White floral cake with delicate hand-finished details', title: 'Floral details' },
+    { category: 'desserts', src: './images/photo_vegan-fruit.jpg', alt: 'Vegan fruit cake with fresh toppings', title: 'Fruit freshness' },
+    { category: 'team', src: './images/menuCffes.png', alt: 'Coffee menu board prepared for guests', title: 'Behind the bar' },
+    { category: 'display', src: './images/menuDrinks.png', alt: 'Colorful drinks menu display', title: 'Cold drinks' },
+  ]);
+
+  const DISPLAY_CASE_PHOTOS = Object.freeze([
+    { src: './images/chjcjcake.png', alt: 'Desserts arranged in the Sweet Fantasy display case', title: 'Daily dessert case' },
+    { src: './images/Screenshot 2026-04-30 220450.png', alt: 'Hand-piped colorful sweets and macarons', title: 'Hand-piped sweets' },
+    { src: './images/menuofdrinks.png', alt: 'Drinks board with summer café options', title: 'Summer drinks' },
+  ]);
+
+  const REVIEWS = Object.freeze([
+    {
+      name: 'Elena M.',
+      text: 'Beautiful cakes, kind service, and coffee that feels perfect after the beach.',
+    },
+    {
+      name: 'Martin K.',
+      text: 'A peaceful café with fresh desserts every day. The pistachio cake was excellent.',
+    },
+    {
+      name: 'Sofia P.',
+      text: 'Cozy interior, friendly team, and a lovely place to stop in Sveti Vlas.',
+    },
+  ]);
+
   function filterProductsByCategory(products, category) {
     if (!category || category === 'Всички') return products;
     return products.filter(function (product) {
@@ -1045,6 +1117,11 @@
       lang: 'EN',
       languages: LANGUAGES,
       i18n: i18n,
+      featuredDesserts: FEATURED_DESSERTS,
+      coffeeMoments: COFFEE_MOMENTS,
+      atmosphereGallery: ATMOSPHERE_GALLERY,
+      displayCasePhotos: DISPLAY_CASE_PHOTOS,
+      reviews: REVIEWS,
 
       galleryModalOpen: false,
       galleryModalSrc: '',

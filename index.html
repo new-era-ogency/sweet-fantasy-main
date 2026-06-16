@@ -76,6 +76,10 @@
             santorini: '#7eb3d0',
             'santorini-deep': '#5a94b5',
             mist: '#e8eef2',
+            'primary-ocean': '#0f2f4a',
+            'bg-cream': '#fbf7ef',
+            'accent-beige': '#d8bf9a',
+            'brand-coffee': '#6f4a2f',
           },
         },
       },
@@ -429,7 +433,178 @@
         </div>
       </section>
 
-      <section id="menu" class="scroll-mt-24 border-b border-slate-900/[0.05] bg-gradient-to-b from-white via-mist/25 to-white">
+      <section id="menu" class="scroll-mt-24 border-b border-slate-900/[0.05] bg-bg-cream">
+        <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between" data-reveal="up">
+            <div class="max-w-2xl">
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee">Featured desserts</p>
+              <h2 class="mt-3 font-display text-[clamp(2rem,7vw,3.5rem)] font-semibold leading-tight tracking-[-0.035em] text-primary-ocean">
+                Close-up textures, fresh cream, and cakes made for seaside celebrations.
+              </h2>
+            </div>
+            <a
+              href="#cake-ordering"
+              class="inline-flex min-h-12 items-center justify-center rounded-full bg-primary-ocean px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/10 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-ink"
+            >
+              Order a cake
+            </a>
+          </div>
+
+          <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <template x-for="item in featuredDesserts" :key="item.title">
+              <article class="group overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-[0_24px_60px_-36px_rgba(15,47,74,0.45)] ring-1 ring-slate-900/[0.04] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_30px_70px_-34px_rgba(15,47,74,0.55)]">
+                <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-accent-beige/30 via-white to-santorini/20">
+                  <img
+                    class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
+                    loading="lazy"
+                    decoding="async"
+                    width="900"
+                    height="1125"
+                    x-bind:src="item.src"
+                    x-bind:alt="item.alt"
+                  />
+                </div>
+                <div class="p-5">
+                  <h3 class="font-display text-xl font-semibold leading-tight text-primary-ocean" x-text="item.title"></h3>
+                  <p class="mt-2 text-sm leading-relaxed text-slate-600" x-text="item.description"></p>
+                </div>
+              </article>
+            </template>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-slate-900/[0.05] bg-white">
+        <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div class="grid gap-8 lg:grid-cols-12 lg:items-center">
+            <div class="lg:col-span-4" data-reveal="left">
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee">Coffee moments</p>
+              <h2 class="mt-3 font-display text-[clamp(2rem,6vw,3.25rem)] font-semibold leading-tight tracking-[-0.035em] text-primary-ocean">
+                Espresso, latte art, and iced coffee for warm Sveti Vlas mornings.
+              </h2>
+              <p class="mt-5 text-base leading-relaxed text-slate-600">
+                A simple, elegant showcase for real top-down coffee photos and terrace table moments.
+              </p>
+            </div>
+            <div class="grid gap-5 sm:grid-cols-2 lg:col-span-8">
+              <template x-for="item in coffeeMoments" :key="item.title">
+                <article class="group overflow-hidden rounded-[1.75rem] border border-slate-900/[0.06] bg-bg-cream shadow-[0_24px_64px_-40px_rgba(15,47,74,0.45)] transition-all duration-300 ease-in-out hover:-translate-y-1">
+                  <div class="relative overflow-hidden" :class="item.layout === 'wide' ? 'aspect-[5/4]' : 'aspect-[4/5]'">
+                    <img
+                      class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
+                      loading="lazy"
+                      decoding="async"
+                      width="960"
+                      height="960"
+                      x-bind:src="item.src"
+                      x-bind:alt="item.alt"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <h3 class="font-display text-xl font-semibold text-primary-ocean" x-text="item.title"></h3>
+                    <p class="mt-2 text-sm leading-relaxed text-slate-600" x-text="item.description"></p>
+                  </div>
+                </article>
+              </template>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="scroll-mt-24 border-b border-slate-900/[0.05] bg-gradient-to-b from-bg-cream via-white to-mist/40">
+        <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div class="mx-auto max-w-3xl text-center" data-reveal="up">
+            <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee">Atmosphere & lifestyle</p>
+            <h2 class="mt-3 font-display text-[clamp(2rem,7vw,3.5rem)] font-semibold leading-tight tracking-[-0.035em] text-primary-ocean">
+              Summer café life: display case, terrace mood, and sweet details in motion.
+            </h2>
+            <p class="mt-5 text-base leading-relaxed text-slate-600">
+              The layout is ready for 10-16 real lifestyle photos across desserts, coffee, interior, team, and display moments.
+            </p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:gap-5">
+            <template x-for="(item, idx) in atmosphereGallery" :key="item.title + idx">
+              <button
+                type="button"
+                class="group overflow-hidden rounded-[1.5rem] border border-white bg-white text-left shadow-[0_22px_58px_-38px_rgba(15,47,74,0.45)] ring-1 ring-slate-900/[0.04] transition-all duration-300 ease-in-out hover:-translate-y-1 focus:outline-none focus-visible:ring-4 focus-visible:ring-santorini/35"
+                @click="openGalleryModal({ src: item.src, caption: item.title })"
+              >
+                <div class="relative overflow-hidden bg-accent-beige/20" :class="idx % 4 === 0 ? 'aspect-[4/5]' : 'aspect-[4/3]'">
+                  <img
+                    class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
+                    loading="lazy"
+                    decoding="async"
+                    width="960"
+                    height="960"
+                    x-bind:src="item.src"
+                    x-bind:alt="item.alt"
+                  />
+                </div>
+                <div class="flex items-center justify-between gap-3 p-4">
+                  <span class="font-display text-lg font-semibold text-primary-ocean" x-text="item.title"></span>
+                  <span class="rounded-full bg-bg-cream px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-coffee" x-text="item.category"></span>
+                </div>
+              </button>
+            </template>
+          </div>
+
+          <div class="mt-10 rounded-[2rem] border border-slate-900/[0.06] bg-white/90 p-5 shadow-[0_24px_70px_-44px_rgba(15,47,74,0.4)] ring-1 ring-white sm:p-7">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee">Display case & team</p>
+                <h3 class="mt-2 font-display text-2xl font-semibold text-primary-ocean">Freshness you can see</h3>
+              </div>
+              <p class="max-w-xl text-sm leading-relaxed text-slate-600">
+                Use this sub-grid for clean display arrangements, fresh bakes, and candid team-in-action photos.
+              </p>
+            </div>
+            <div class="mt-6 grid gap-4 sm:grid-cols-3">
+              <template x-for="item in displayCasePhotos" :key="item.title">
+                <figure class="group overflow-hidden rounded-2xl bg-bg-cream">
+                  <img
+                    class="aspect-[4/3] w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
+                    loading="lazy"
+                    decoding="async"
+                    width="720"
+                    height="540"
+                    x-bind:src="item.src"
+                    x-bind:alt="item.alt"
+                  />
+                  <figcaption class="px-4 py-3 text-sm font-semibold text-primary-ocean" x-text="item.title"></figcaption>
+                </figure>
+              </template>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="border-b border-slate-900/[0.05] bg-primary-ocean text-white">
+        <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+          <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+            <div class="lg:col-span-4" data-reveal="left">
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-accent-beige">Verified-style reviews</p>
+              <h2 class="mt-3 font-display text-[clamp(2rem,6vw,3.25rem)] font-semibold leading-tight tracking-[-0.035em]">
+                Guests come for dessert and stay for the calm.
+              </h2>
+            </div>
+            <div class="grid gap-4 sm:grid-cols-3 lg:col-span-8">
+              <template x-for="review in reviews" :key="review.name">
+                <article class="rounded-[1.5rem] border border-white/10 bg-white/[0.08] p-5 shadow-[0_22px_60px_-40px_rgba(0,0,0,0.7)] backdrop-blur">
+                  <div class="flex gap-1 text-accent-beige" aria-label="5 star review">
+                    <span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span>
+                  </div>
+                  <p class="mt-4 text-sm leading-relaxed text-white/85" x-text="review.text"></p>
+                  <p class="mt-5 text-sm font-bold text-white" x-text="review.name"></p>
+                  <p class="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-white/50">Google review</p>
+                </article>
+              </template>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="legacy-menu" hidden class="scroll-mt-24 border-b border-slate-900/[0.05] bg-gradient-to-b from-white via-mist/25 to-white">
         <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div class="max-w-2xl" data-reveal="up" data-reveal-delay="0">
             <h2 class="font-display text-[clamp(2rem,3.5vw,2.875rem)] font-semibold tracking-[-0.02em] text-ink" x-text="t('menuTitle')">Menu</h2>
@@ -803,7 +978,8 @@
       </section>
 
       <section
-        id="gallery"
+        id="legacy-gallery"
+        hidden
         class="scroll-mt-24 border-y border-slate-900/[0.06] bg-mist/40"
         style="background-image: linear-gradient(rgba(232, 238, 242, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(232, 238, 242, 0.5) 1px, transparent 1px); background-size: 28px 28px;"
       >
@@ -939,7 +1115,7 @@
         </div>
       </section>
 
-      <section id="about" class="scroll-mt-24 border-t border-slate-900/[0.05] bg-white">
+      <section id="legacy-about" hidden class="scroll-mt-24 border-t border-slate-900/[0.05] bg-white">
         <div class="sf-section mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-12 lg:gap-16 lg:px-10">
           <div class="lg:col-span-5" data-reveal="up" data-reveal-delay="0">
             <h2 class="font-display text-[clamp(2rem,3.5vw,2.875rem)] font-semibold tracking-[-0.02em] text-ink" x-text="t('aboutTitle')">About us</h2>
@@ -955,10 +1131,45 @@
 
       <section id="contacts" class="scroll-mt-24 border-t border-slate-900/[0.06] bg-gradient-to-br from-white via-parchment/30 to-mist/25">
         <div class="sf-section mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-          <h2 class="font-display text-[clamp(2rem,3.5vw,2.875rem)] font-semibold tracking-[-0.02em] text-ink" data-reveal="up" x-text="t('contactsTitle')">Contacts</h2>
-          <p class="mt-5 max-w-3xl text-[1.0625rem] leading-[1.75] text-slate-600" data-reveal="up" data-reveal-delay="50" x-text="t('contactsIntro')">
-            Visit us at 41 Chaika Street — open daily 9 AM to 10 PM.
-          </p>
+          <div class="grid gap-10 lg:grid-cols-12 lg:items-start">
+            <div class="lg:col-span-5" data-reveal="left">
+              <p class="text-[11px] font-bold uppercase tracking-[0.28em] text-brand-coffee">How to find us</p>
+              <h2 class="mt-3 font-display text-[clamp(2rem,7vw,3.5rem)] font-semibold leading-tight tracking-[-0.035em] text-primary-ocean" x-text="t('contactsTitle')">Contacts</h2>
+              <p class="mt-5 text-[1.0625rem] leading-[1.75] text-slate-600" x-text="t('contactsIntro')">
+                Visit us at 41 Chaika Street — open daily 9 AM to 10 PM.
+              </p>
+              <a
+                class="mt-7 inline-flex min-h-12 items-center justify-center rounded-full bg-primary-ocean px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/10 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-ink"
+                href="https://maps.app.goo.gl/eefL3tybRtjCAoQc8"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open Google Maps
+              </a>
+            </div>
+            <div class="lg:col-span-7" data-reveal="right">
+              <a
+                class="group block overflow-hidden rounded-[2rem] border border-white bg-white shadow-[0_28px_80px_-46px_rgba(15,47,74,0.5)] ring-1 ring-slate-900/[0.05]"
+                href="https://maps.app.goo.gl/eefL3tybRtjCAoQc8"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Sweet Fantasy location on Google Maps"
+              >
+                <div class="relative aspect-[4/3] bg-[radial-gradient(circle_at_20%_20%,rgba(126,179,208,0.45),transparent_35%),linear-gradient(135deg,#fbf7ef,#e8eef2)]">
+                  <div class="absolute inset-6 rounded-[1.5rem] border border-white/70 bg-white/50 shadow-inner"></div>
+                  <div class="absolute left-1/2 top-1/2 flex size-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-primary-ocean text-white shadow-2xl shadow-primary-ocean/25 transition-all duration-300 ease-in-out group-hover:scale-105">
+                    <svg class="size-9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 2a7 7 0 017 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 017-7zm0 4.25a2.75 2.75 0 100 5.5 2.75 2.75 0 000-5.5z" />
+                    </svg>
+                  </div>
+                  <div class="absolute bottom-5 left-5 right-5 rounded-2xl bg-white/90 p-4 shadow-lg backdrop-blur">
+                    <p class="font-display text-xl font-semibold text-primary-ocean">41 Chaika Street, Sveti Vlas</p>
+                    <p class="mt-1 text-sm leading-relaxed text-slate-600">Easy walk from the beach promenade. Street parking nearby, depending on season.</p>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
 
           <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
                 <div class="rounded-2xl border border-slate-900/[0.07] bg-white/95 p-7 shadow-[0_20px_44px_-28px_rgba(22,26,31,0.12)] ring-1 ring-white" data-reveal="zoom" data-reveal-delay="0">
