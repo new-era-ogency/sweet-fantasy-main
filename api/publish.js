@@ -2,6 +2,8 @@ const { createClient } = require('@supabase/supabase-js');
 
 const POST_TYPES = new Set(['news', 'event']);
 const POST_STATUSES = new Set(['draft', 'published']);
+const FACEBOOK_PAGE_ID = '1697441158067983';
+const FACEBOOK_FEED_URL = `https://graph.facebook.com/v25.0/${FACEBOOK_PAGE_ID}/feed`;
 
 function sendJson(res, statusCode, payload) {
   res.setHeader('Content-Type', 'application/json');
@@ -61,14 +63,53 @@ function validatePayload(body) {
   return '';
 }
 
-async function postToFacebook({ pageId, accessToken, siteUrl, post }) {
+function createMetaGraphError(response, data) {
+  const metaError = data && data.error ? data.error : {};
+  const message = metaError.message || `Meta Graph API returned ${response.status}`;
+  const details = {
+    status: response.status,
+    type: metaError.type || null,
+    code: metaError.code || null,
+    subcode: metaError.error_subcode || metaError.subcode || null,
+    fbtraceId: metaError.fbtrace_id || null,
+  };
+  const error = new Error(message);
+  error.meta = details;
+  return error;
+}
+
+function logMetaGraphError(error) {
+  const meta = error && error.meta ? error.meta : {};
+  console.error('Meta Graph API publish failed', {
+    message: error.message,
+    status: meta.status || null,
+    type: meta.type || null,
+    code: meta.code || null,
+    subcode: meta.subcode || null,
+    fbtraceId: meta.fbtraceId || null,
+    requiredScopes: ['pages_manage_posts', 'publish_video'],
+  });
+}
+
+function formatMetaWarning(error) {
+  const meta = error && error.meta ? error.meta : {};
+  const parts = [error.message];
+
+  if (meta.code) parts.push(`code ${meta.code}`);
+  if (meta.subcode) parts.push(`subcode ${meta.subcode}`);
+  if (meta.fbtraceId) parts.push(`fbtrace_id ${meta.fbtraceId}`);
+
+  return parts.join(' | ');
+}
+
+async function postToFacebook({ accessToken, siteUrl, post }) {
   const articleUrl = `${siteUrl.replace(/\/$/, '')}/news/${post.slug}`;
   const message = `${post.title}\n\n${excerpt(post.content)}`;
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 10000);
 
   try {
-    const response = await fetch(`https://graph.facebook.com/v20.0/${pageId}/feed`, {
+    const response = await fetch(FACEBOOK_FEED_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -84,8 +125,7 @@ async function postToFacebook({ pageId, accessToken, siteUrl, post }) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      const messageFromMeta = data.error?.message || `Meta Graph API returned ${response.status}`;
-      throw new Error(messageFromMeta);
+      throw createMetaGraphError(response, data);
     }
 
     if (!data.id) {
@@ -113,8 +153,7 @@ module.exports = async function handler(req, res) {
     SUPABASE_URL,
     SUPABASE_SERVICE_ROLE_KEY,
     ADMIN_PUBLISH_TOKEN,
-    FACEBOOK_PAGE_ID,
-    FACEBOOK_PAGE_ACCESS_TOKEN,
+    FACEBOOK_USER_ACCESS_TOKEN,
     SITE_URL = 'https://sweet-fantasy-vlas.vercel.app',
   } = process.env;
 
@@ -186,13 +225,12 @@ module.exports = async function handler(req, res) {
   const shouldPostToFacebook = Boolean(body.syncToFacebook) && status === 'published';
 
   if (shouldPostToFacebook) {
-    if (!FACEBOOK_PAGE_ID || !FACEBOOK_PAGE_ACCESS_TOKEN) {
+    if (!FACEBOOK_USER_ACCESS_TOKEN) {
       warning = 'Post was saved, but Facebook sync is not configured';
     } else {
       try {
         facebookPostId = await postToFacebook({
-          pageId: FACEBOOK_PAGE_ID,
-          accessToken: FACEBOOK_PAGE_ACCESS_TOKEN,
+          accessToken: FACEBOOK_USER_ACCESS_TOKEN,
           siteUrl: SITE_URL,
           post,
         });
@@ -206,7 +244,8 @@ module.exports = async function handler(req, res) {
           warning = `Facebook post was created, but facebook_post_id was not saved: ${updateError.message}`;
         }
       } catch (error) {
-        warning = `Post was saved, but Facebook sync failed: ${error.message}`;
+        logMetaGraphError(error);
+        warning = `Post was saved, but Facebook sync failed: ${formatMetaWarning(error)}`;
       }
     }
   }

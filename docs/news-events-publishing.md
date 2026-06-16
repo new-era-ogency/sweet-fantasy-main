@@ -29,12 +29,22 @@ Add these in Vercel Project Settings → Environment Variables:
 SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 ADMIN_PUBLISH_TOKEN=
-FACEBOOK_PAGE_ID=
-FACEBOOK_PAGE_ACCESS_TOKEN=
+FACEBOOK_PAGE_ID=1697441158067983
+FACEBOOK_USER_ACCESS_TOKEN=
 SITE_URL=https://sweet-fantasy-vlas.vercel.app
 ```
 
-Keep `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PUBLISH_TOKEN`, and `FACEBOOK_PAGE_ACCESS_TOKEN` server-side only.
+Rename the old `FACEBOOK_PAGE_ACCESS_TOKEN` variable to `FACEBOOK_USER_ACCESS_TOKEN`.
+Use the User Access Token from the direct Page admin account for `FACEBOOK_USER_ACCESS_TOKEN`.
+
+For local development, mirror the same values in `.env.local`:
+
+```env
+FACEBOOK_PAGE_ID=1697441158067983
+FACEBOOK_USER_ACCESS_TOKEN=<paste-your-user-access-token-here>
+```
+
+Keep `SUPABASE_SERVICE_ROLE_KEY`, `ADMIN_PUBLISH_TOKEN`, and `FACEBOOK_USER_ACCESS_TOKEN` server-side only. Do not commit the real token value to GitHub.
 
 ## 3. Publish API
 
@@ -67,14 +77,16 @@ The API saves to Supabase first. If Facebook sync fails, the post remains saved 
 The function posts to:
 
 ```text
-https://graph.facebook.com/v20.0/{FACEBOOK_PAGE_ID}/feed
+https://graph.facebook.com/v25.0/1697441158067983/feed
 ```
 
 It sends:
 
 - `message`: title plus content excerpt
 - `link`: `${SITE_URL}/news/${slug}`
-- `access_token`: `FACEBOOK_PAGE_ACCESS_TOKEN`
+- `access_token`: `FACEBOOK_USER_ACCESS_TOKEN`
 
 The returned Meta post `id` is saved to `posts.facebook_post_id`.
+
+If Meta rejects the token, the API logs the exact Graph API `code`, `subcode`, and `fbtrace_id` in the server logs. Permission-related failures usually mean the User Access Token is missing a publishing scope such as `pages_manage_posts` or, for video publishing, `publish_video`.
 
