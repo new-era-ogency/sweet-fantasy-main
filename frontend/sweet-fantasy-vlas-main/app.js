@@ -1315,6 +1315,11 @@
       languages: LANGUAGES,
       i18n: i18n,
       cafeMenuCategories: CAFE_MENU_CATEGORIES,
+      beverageMenuItems: typeof window !== 'undefined' && window.BEVERAGE_MENU_ITEMS ? window.BEVERAGE_MENU_ITEMS : [],
+      beverageMenuTabs: typeof window !== 'undefined' && window.BEVERAGE_MENU_TABS ? window.BEVERAGE_MENU_TABS : [],
+      beverageMenuTab: 'all',
+      beverageMenuSearch: '',
+      beverageIntensityScale: Object.freeze([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
       featuredDesserts: FEATURED_DESSERTS,
       coffeeMoments: COFFEE_MOMENTS,
       atmosphereGallery: ATMOSPHERE_GALLERY,
@@ -1743,6 +1748,23 @@
 
       filteredRichardProducts() {
         return this.filterProductsByCategory(this.richardProducts, this.selectedRichardCategory);
+      },
+
+      setBeverageMenuTab(tab) {
+        this.beverageMenuTab = tab;
+      },
+
+      filteredBeverageMenuItems() {
+        var q = String(this.beverageMenuSearch || '')
+          .trim()
+          .toLowerCase();
+        var activeTab = this.beverageMenuTab;
+        return (this.beverageMenuItems || []).filter(function (item) {
+          if (activeTab !== 'all' && item.category !== activeTab) return false;
+          if (!q) return true;
+          var haystack = [item.name, item.notes, item.brand, item.number ? 'no ' + item.number : ''].join(' ').toLowerCase();
+          return haystack.indexOf(q) !== -1;
+        });
       },
 
       bgn(value) {
