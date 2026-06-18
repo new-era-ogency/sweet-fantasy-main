@@ -80,16 +80,27 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+  <link
+    rel="preload"
+    as="image"
+    href="https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp"
+    imagesrcset="https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=640&q=80&fm=webp 640w, https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=960&q=80&fm=webp 960w, https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
+    imagesizes="(max-width: 1024px) 100vw, 58vw"
+    fetchpriority="high"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap"
+    rel="stylesheet"
+  />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            display: ['"Playfair Display"', 'Georgia', 'serif'],
-            handwritten: ['Caveat', 'cursive'],
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            display: ['var(--font-display)', 'Georgia', 'serif'],
+            sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
           },
           colors: {
             cream: '#f5f1ea',
@@ -109,6 +120,12 @@
     };
   </script>
   <style>
+    :root {
+      --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --sf-hero-min-h: min(100dvh, 56rem);
+    }
+
     [x-cloak]{display:none !important}
 
     *,
@@ -125,12 +142,51 @@
     }
 
     body {
+      font-family: var(--font-sans);
       font-feature-settings: 'kern' 1, 'liga' 1;
       max-width: 100%;
       overflow-x: hidden;
       font-size: 16px;
       line-height: 1.6;
       text-rendering: optimizeLegibility;
+      letter-spacing: 0.01em;
+    }
+
+    h1, h2, h3, h4, .font-display {
+      font-family: var(--font-display);
+    }
+
+    .sf-media {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(216, 191, 154, 0.22), rgba(232, 238, 242, 0.55));
+    }
+
+    .sf-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sf-skeleton-shimmer {
+      background: linear-gradient(90deg, rgba(226, 232, 240, 0.55) 0%, rgba(248, 250, 252, 0.95) 50%, rgba(226, 232, 240, 0.55) 100%);
+      background-size: 200% 100%;
+      animation: sf-skeleton-shimmer 1.35s ease-in-out infinite;
+    }
+
+    @keyframes sf-skeleton-shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .sf-btn-premium {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .sf-btn-premium:hover {
+        transform: translateY(-2px);
+      }
     }
 
     img,
@@ -138,7 +194,6 @@
     canvas {
       display: block;
       max-width: 100%;
-      height: auto;
     }
 
     button,
@@ -301,6 +356,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .sf-skeleton-shimmer {
+        animation: none;
+        background: rgba(226, 232, 240, 0.75);
+      }
       .sf-header-loaded {
         opacity: 1 !important;
         animation: none !important;
@@ -496,14 +555,14 @@
             <div class="sf-hero-stagger mt-10 flex flex-wrap gap-4">
               <a
                 href="#menu"
-                class="inline-flex min-h-[50px] flex-1 items-center justify-center rounded-full bg-ink px-7 text-[13px] font-semibold uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/15 transition-[transform,box-shadow,background-color] duration-300 hover:bg-slate-900 hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 sm:flex-none sm:px-8"
+                class="sf-btn-premium inline-flex min-h-[50px] flex-1 items-center justify-center rounded-full border border-slate-900/15 bg-ink px-7 text-[13px] font-semibold uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/15 hover:border-slate-900/25 hover:bg-slate-900 hover:shadow-xl active:translate-y-0 sm:flex-none sm:px-8"
                 x-text="t('heroCtaMenu')"
               >
                 Explore the menu
               </a>
               <a
                 href="#contacts"
-                class="inline-flex min-h-[50px] flex-1 items-center justify-center rounded-full border border-slate-900/15 bg-white/50 px-7 text-[13px] font-semibold uppercase tracking-[0.12em] text-ink transition-[transform,background-color] duration-300 hover:border-slate-900/35 hover:bg-white/80 hover:-translate-y-0.5 active:translate-y-0 sm:flex-none sm:px-8"
+                class="sf-btn-premium inline-flex min-h-[50px] flex-1 items-center justify-center rounded-full border border-slate-900/15 bg-white/50 px-7 text-[13px] font-semibold uppercase tracking-[0.12em] text-ink hover:border-slate-900/35 hover:bg-white/80 active:translate-y-0 sm:flex-none sm:px-8"
                 x-text="t('heroCtaContacts')"
               >
                 Visit us
@@ -514,13 +573,16 @@
           <div class="sf-hero-media order-1 mt-10 lg:order-2 lg:col-span-7 lg:mt-0">
             <div class="relative mx-auto w-full max-w-xl lg:max-w-none xl:translate-x-[2%]">
               <div class="relative aspect-[5/6] overflow-hidden rounded-[1.875rem] ring-1 ring-slate-900/[0.08] sm:aspect-[4/5]">
-                <div class="sf-hero-img-wrap absolute inset-0 overflow-hidden bg-gradient-to-br from-parchment via-mist to-santorini/40">
+                <div class="sf-hero-img-wrap sf-media absolute inset-0 overflow-hidden bg-gradient-to-br from-parchment via-mist to-santorini/40">
                   <img
-                    src="./images/interier.png"
-                    alt="Sweet Fantasy interior"
+                    x-bind:src="heroImage.src"
+                    x-bind:srcset="heroImage.srcset"
+                    x-bind:sizes="heroImage.sizes"
+                    x-bind:alt="heroImage.alt"
+                    x-bind:width="heroImage.width"
+                    x-bind:height="heroImage.height"
                     class="sf-hero-img h-full w-full object-cover brightness-[0.96] contrast-[1.03] saturate-[0.94]"
-                    width="960"
-                    height="1200"
+                    fetchpriority="high"
                     loading="eager"
                     decoding="async"
                   />
@@ -556,7 +618,7 @@
             </div>
             <a
               href="#cake-ordering"
-              class="inline-flex min-h-12 items-center justify-center rounded-full bg-primary-ocean px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/10 transition-all duration-300 ease-in-out hover:-translate-y-0.5 hover:bg-ink"
+              class="sf-btn-premium inline-flex min-h-12 items-center justify-center rounded-full border border-transparent bg-primary-ocean px-6 text-[12px] font-bold uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/10 hover:border-primary-ocean/80 hover:bg-ink"
             >
               Order a cake
             </a>
@@ -565,7 +627,7 @@
           <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             <template x-for="item in featuredDesserts" :key="item.title">
               <article class="group overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-[0_24px_60px_-36px_rgba(15,47,74,0.45)] ring-1 ring-slate-900/[0.04] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_30px_70px_-34px_rgba(15,47,74,0.55)]">
-                <div class="relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-accent-beige/30 via-white to-santorini/20">
+                <div class="sf-media relative aspect-[4/5] overflow-hidden bg-gradient-to-br from-accent-beige/30 via-white to-santorini/20">
                   <img
                     class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
                     loading="lazy"
@@ -902,6 +964,7 @@
               x-show="newsEventsLoading"
               x-cloak
               x-text="t('newsLoading')"
+              aria-live="polite"
             >
               Loading latest posts...
             </p>
@@ -909,20 +972,43 @@
 
           <p
             class="mt-6 rounded-2xl border border-accent-beige/30 bg-accent-beige/10 px-4 py-3 text-sm font-medium text-brand-coffee"
-            x-show="newsEventsWarning"
+            x-show="newsEventsWarning && !newsEventsLoading"
             x-transition
             x-cloak
             x-text="newsEventsWarning"
           ></p>
 
-          <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+          <div
+            class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6"
+            x-show="newsEventsLoading"
+            x-cloak
+            aria-busy="true"
+            aria-label="Loading news and events"
+          >
+            <template x-for="slot in newsSkeletonSlots" :key="'news-skeleton-' + slot">
+              <article class="overflow-hidden rounded-[1.75rem] border border-slate-900/[0.06] bg-white ring-1 ring-slate-900/[0.04]" aria-hidden="true">
+                <div class="aspect-[4/3] sf-skeleton-shimmer bg-gradient-to-br from-accent-beige/20 via-slate-100 to-santorini/10"></div>
+                <div class="space-y-3 p-5 sm:p-6">
+                  <div class="h-3 w-28 rounded-full sf-skeleton-shimmer"></div>
+                  <div class="h-7 w-4/5 rounded-lg sf-skeleton-shimmer"></div>
+                  <div class="space-y-2">
+                    <div class="h-3 w-full rounded sf-skeleton-shimmer"></div>
+                    <div class="h-3 w-[92%] rounded sf-skeleton-shimmer"></div>
+                    <div class="h-3 w-[78%] rounded sf-skeleton-shimmer"></div>
+                  </div>
+                </div>
+              </article>
+            </template>
+          </div>
+
+          <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" x-show="!newsEventsLoading">
             <template x-for="(item, idx) in newsEvents" :key="'news-event-' + (item.id || idx)">
               <article
                 class="group overflow-hidden rounded-[1.75rem] border border-white bg-white shadow-[0_24px_64px_-40px_rgba(15,47,74,0.45)] ring-1 ring-slate-900/[0.05] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_34px_76px_-42px_rgba(15,47,74,0.58)]"
                 data-reveal="up"
                 x-bind:data-reveal-delay="String(Math.min(idx * 70, 280))"
               >
-                <div class="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-accent-beige/30 via-white to-santorini/20">
+                <div class="sf-media relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-accent-beige/30 via-white to-santorini/20">
                   <img
                     class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
                     loading="lazy"
@@ -2073,7 +2159,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.17/dist/lenis.min.js"></script>
   <script defer src="data/beverageMenu.js"></script>
-  <script defer src="app.js?v=4"></script>
+  <script defer src="app.js?v=5"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
 </body>
 </html>

@@ -349,6 +349,23 @@
     },
   ]);
 
+  /** Reserved slots for skeleton placeholders — keeps grid height stable during fetch. */
+  const CATALOG_SKELETON_SLOTS = Object.freeze([0, 1, 2]);
+  const NEWS_SKELETON_SLOTS = Object.freeze([0, 1, 2, 3, 4, 5]);
+
+  /** Hero LCP image — optimized Unsplash (coffee & artisan pastry). */
+  const HERO_IMAGE = Object.freeze({
+    src: 'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp',
+    srcset:
+      'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=640&q=80&fm=webp 640w, ' +
+      'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=960&q=80&fm=webp 960w, ' +
+      'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w',
+    sizes: '(max-width: 1024px) 100vw, 58vw',
+    alt: 'Specialty coffee served beside artisan cake at a premium café and bakery',
+    width: 960,
+    height: 1200,
+  });
+
   const FEATURED_DESSERTS = Object.freeze([
     {
       title: 'Dubai Pistachio Cake',
@@ -1320,13 +1337,16 @@
       beverageMenuTab: 'all',
       beverageMenuSearch: '',
       beverageIntensityScale: Object.freeze([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+      heroImage: HERO_IMAGE,
+      catalogSkeletonSlots: CATALOG_SKELETON_SLOTS,
+      newsSkeletonSlots: NEWS_SKELETON_SLOTS,
       featuredDesserts: FEATURED_DESSERTS,
       coffeeMoments: COFFEE_MOMENTS,
       atmosphereGallery: ATMOSPHERE_GALLERY,
       displayCasePhotos: DISPLAY_CASE_PHOTOS,
       reviews: REVIEWS,
-      newsEvents: NEWS_EVENTS_FALLBACK.slice(),
-      newsEventsLoading: false,
+      newsEvents: [],
+      newsEventsLoading: true,
       newsEventsWarning: '',
       mobileNavOpen: false,
 
@@ -1447,7 +1467,7 @@
       async loadNewsEvents() {
         var self = this;
         this.newsEventsLoading = true;
-        this.newsEventsWarning = this.t('newsFallbackNotice');
+        this.newsEventsWarning = '';
 
         try {
           var response = await fetch('/api/posts?limit=6', {
@@ -1459,18 +1479,21 @@
           var data = await response.json();
           if (data && Array.isArray(data.posts) && data.posts.length) {
             this.newsEvents = data.posts;
-            this.newsEventsWarning = '';
             queueMicrotask(function () {
               if (typeof window.__sfRevealRefresh === 'function') window.__sfRevealRefresh();
             });
+            return;
           }
+
+          throw new Error('Posts API returned empty list');
         } catch (_) {
           this.newsEvents = NEWS_EVENTS_FALLBACK.slice();
-        } finally {
-          this.newsEventsLoading = false;
+          this.newsEventsWarning = this.t('newsFallbackNotice');
           setTimeout(function () {
             if (self.newsEventsWarning === self.t('newsFallbackNotice')) self.newsEventsWarning = '';
           }, 4500);
+        } finally {
+          this.newsEventsLoading = false;
         }
       },
 
