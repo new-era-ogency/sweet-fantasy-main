@@ -27,7 +27,7 @@ export default function PremiumCafeMenu() {
   }, [activeTab, query]);
 
   return (
-    <section className="border-t border-zinc-200/80 bg-white pt-10 sm:pt-12">
+    <section className="mt-14 overflow-hidden rounded-[2.5rem] border border-zinc-100 bg-white p-5 shadow-[0_8px_40px_rgba(15,47,74,0.06)] sm:p-8 lg:p-10">
       <header className="flex flex-col gap-6 border-b border-zinc-200/80 pb-8 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#0f2f4a]">
