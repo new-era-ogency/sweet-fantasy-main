@@ -16,16 +16,16 @@ export default function MenuProductImage({ item }: MenuProductImageProps) {
   if (failed) {
     return (
       <div
-        className="flex h-full w-full flex-col items-center justify-center gap-2 bg-slate-50 p-4 text-center"
+        className="flex h-full w-full flex-col items-center justify-center gap-2.5 text-center"
         role="img"
         aria-label={item.name}
       >
         {isEspresso ? (
-          <Coffee className="h-8 w-8 text-slate-300" strokeWidth={1.5} aria-hidden />
+          <Coffee className="h-9 w-9 text-zinc-300" strokeWidth={1.5} aria-hidden />
         ) : (
-          <Leaf className="h-8 w-8 text-slate-300" strokeWidth={1.5} aria-hidden />
+          <Leaf className="h-9 w-9 text-zinc-300" strokeWidth={1.5} aria-hidden />
         )}
-        <span className="text-xs text-slate-400">{item.name}</span>
+        <span className="max-w-[12rem] text-xs leading-relaxed text-zinc-400">{item.name}</span>
       </div>
     );
   }
@@ -36,7 +36,7 @@ export default function MenuProductImage({ item }: MenuProductImageProps) {
       alt={item.name}
       fill
       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-      className="object-contain"
+      className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.02]"
       onError={() => setFailed(true)}
     />
   );
