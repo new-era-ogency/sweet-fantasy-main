@@ -7,6 +7,6 @@
     "start": "python3 -m http.server 5173"
   },
   "dependencies": {
-    "@sendgrid/mail": "^8.1.6"
+    "resend": "^4.8.0"
   }
 }

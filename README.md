@@ -31,7 +31,7 @@ npm run start:dev
 
 The root `/api/booking` endpoint needs:
 
-- `SENDGRID_API_KEY`
+- `RESEND_API_KEY`
 - `FROM_EMAIL`
 - `TO_EMAIL`
 

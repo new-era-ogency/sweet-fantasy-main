@@ -7,7 +7,7 @@ Static Sweet Fantasy landing page with a small serverless booking endpoint.
 - `index.html` - page markup and Tailwind CDN setup
 - `app.js` - Alpine.js state, translations, form logic and gallery behavior
 - `images/` - site images
-- `api/booking.js` - Vercel-style API route that sends booking emails with SendGrid
+- `api/booking.js` - Vercel-style API route that sends booking emails with Resend
 
 ## Local Preview
 
@@ -24,6 +24,6 @@ The booking form posts to `/api/booking`, so email sending works only in an envi
 
 Set these variables in the hosting provider:
 
-- `SENDGRID_API_KEY`
+- `RESEND_API_KEY`
 - `FROM_EMAIL`
 - `TO_EMAIL`

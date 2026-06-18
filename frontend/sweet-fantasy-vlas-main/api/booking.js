@@ -1,4 +1,4 @@
-const sgMail = require('@sendgrid/mail');
+const { Resend } = require('resend');
 
 function escapeHtml(value) {
   return String(value || '')
@@ -29,9 +29,9 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const apiKey = process.env.SENDGRID_API_KEY;
-  const fromEmail = process.env.FROM_EMAIL || process.env.SENDGRID_FROM_EMAIL;
-  const toEmail = process.env.TO_EMAIL || process.env.SENDGRID_TO_EMAIL || process.env.ADMIN_EMAIL;
+  const apiKey = process.env.RESEND_API_KEY;
+  const fromEmail = process.env.FROM_EMAIL;
+  const toEmail = process.env.TO_EMAIL;
 
   if (!apiKey || !fromEmail || !toEmail) {
     sendJson(res, 500, {
@@ -83,7 +83,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  sgMail.setApiKey(apiKey);
+  const resend = new Resend(apiKey);
 
   const customerName = escapeHtml(data.customerName);
   const customerEmail = escapeHtml(data.customerEmail);
@@ -115,33 +115,38 @@ module.exports = async function handler(req, res) {
   `;
 
   try {
-    await Promise.all([
-      sgMail.send({
-        to: toEmail,
+    const [adminResult, customerResult] = await Promise.all([
+      resend.emails.send({
         from: fromEmail,
-        replyTo: data.customerEmail,
+        to: toEmail,
+        reply_to: data.customerEmail,
         subject: `Новый заказ торта от ${data.customerName}`,
         html: adminHtml,
       }),
-      sgMail.send({
-        to: data.customerEmail,
+      resend.emails.send({
         from: fromEmail,
+        to: data.customerEmail,
         subject: 'Ваш заказ торта принят! | Sweet Fantasy',
         html: customerHtml,
       }),
     ]);
 
+    const sendError = adminResult.error || customerResult.error;
+    if (sendError) {
+      throw sendError;
+    }
+
     sendJson(res, 200, { success: true, message: 'Бронирование успешно оформлено' });
   } catch (error) {
     console.error('Booking email failed', {
-      code: error.code,
-      status: error.response?.status,
-      body: error.response?.body,
+      name: error.name,
+      message: error.message,
+      statusCode: error.statusCode,
     });
     sendJson(res, 500, {
       success: false,
       error: 'Booking email failed',
-      message: error.response?.body?.errors?.[0]?.message || error.message || 'Booking email failed',
+      message: error.message || 'Booking email failed',
     });
   }
 };
