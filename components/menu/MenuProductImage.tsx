@@ -36,7 +36,7 @@ export default function MenuProductImage({ item }: MenuProductImageProps) {
       alt={item.name}
       fill
       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-      className="object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.02]"
+      className="object-contain scale-[1.22] transition-transform duration-300 ease-in-out group-hover:scale-[1.26]"
       onError={() => setFailed(true)}
     />
   );

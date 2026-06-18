@@ -46,10 +46,10 @@ export default function BeverageProductCard({ item }: BeverageProductCardProps) 
   return (
     <article
       role="listitem"
-      className="group flex flex-col overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
     >
-      <div className="aspect-[4/5] bg-[#F9F9F8] p-6 sm:p-8">
-        <div className="relative h-full w-full">
+      <div className="aspect-[4/5] overflow-hidden bg-white p-1.5 sm:p-2">
+        <div className="relative h-full w-full overflow-hidden">
           <MenuProductImage item={item} />
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function BeverageProductCard({ item }: BeverageProductCardProps) 
         </h3>
         <p className="mt-1.5 text-xs leading-relaxed text-stone-500">{item.details}</p>
 
-        <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-[#c8102e]/75">
+        <p className="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-[#0f2f4a]/80">
           Available in café
         </p>
       </div>

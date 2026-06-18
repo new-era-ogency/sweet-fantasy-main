@@ -692,7 +692,7 @@
           >
             <header class="flex flex-col gap-6 border-b border-zinc-200/80 pb-8 lg:flex-row lg:items-end lg:justify-between">
               <div class="max-w-2xl">
-                <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-[#c8102e]">
+                <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-primary-ocean">
                   Cafés Richard · Comptoirs Richard
                 </p>
                 <h3 class="mt-2 font-display text-[clamp(1.75rem,5vw,2.75rem)] font-semibold leading-tight tracking-[-0.02em] text-zinc-900">
@@ -712,7 +712,7 @@
                   type="search"
                   x-model="beverageMenuSearch"
                   placeholder="Search products…"
-                  class="w-full rounded-sm border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-800 outline-none transition placeholder:text-zinc-400 focus:border-[#c8102e]/60 focus:ring-1 focus:ring-[#c8102e]/30"
+                  class="w-full rounded-2xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-800 outline-none transition placeholder:text-zinc-400 focus:border-primary-ocean/60 focus:ring-1 focus:ring-primary-ocean/30"
                 />
               </label>
             </header>
@@ -726,7 +726,7 @@
                   x-on:click="setBeverageMenuTab(tab.id)"
                   class="inline-flex min-h-10 items-center gap-2 px-4 text-sm font-medium transition-colors"
                   x-bind:class="beverageMenuTab === tab.id
-                    ? 'border-b-2 border-[#c8102e] text-[#c8102e]'
+                    ? 'border-b-2 border-primary-ocean text-primary-ocean'
                     : 'border-b-2 border-transparent text-slate-600 hover:text-slate-900'"
                 >
                   <span x-text="tab.label"></span>
@@ -736,7 +736,7 @@
 
             <div class="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 lg:gap-6" role="list">
               <template x-if="filteredBeverageMenuItems().length === 0">
-                <p class="col-span-full rounded-xl border border-dashed border-zinc-200 px-6 py-14 text-center text-sm text-stone-500">
+                <p class="col-span-full rounded-2xl border border-dashed border-zinc-200 px-6 py-14 text-center text-sm text-stone-500">
                   No items match your search. Try another flavour or clear the filter.
                 </p>
               </template>
@@ -744,13 +744,13 @@
               <template x-for="item in filteredBeverageMenuItems()" :key="item.id">
                 <article
                   role="listitem"
-                  class="group flex flex-col overflow-hidden rounded-xl border border-zinc-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
+                  class="group flex flex-col overflow-hidden rounded-2xl border border-zinc-100 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)]"
                 >
-                  <div class="aspect-[4/5] bg-[#F9F9F8] p-6 sm:p-8">
-                    <div class="relative h-full w-full">
+                  <div class="aspect-[4/5] overflow-hidden bg-white p-1.5 sm:p-2">
+                    <div class="relative h-full w-full overflow-hidden">
                       <img
                         x-show="!hasBeverageImageError(item.id)"
-                        class="h-full w-full object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.02]"
+                        class="h-full w-full scale-[1.22] object-contain transition-transform duration-300 ease-in-out group-hover:scale-[1.26]"
                         loading="lazy"
                         decoding="async"
                         width="400"
@@ -804,7 +804,7 @@
 
                     <h4 class="mt-3 font-display text-[1.05rem] font-semibold leading-snug tracking-tight text-zinc-900" x-text="item.name"></h4>
                     <p class="mt-1.5 text-xs leading-relaxed text-stone-500" x-text="item.details"></p>
-                    <p class="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-[#c8102e]/75">
+                    <p class="mt-4 text-[10px] font-medium uppercase tracking-[0.16em] text-primary-ocean/80">
                       Available in café
                     </p>
                   </div>
