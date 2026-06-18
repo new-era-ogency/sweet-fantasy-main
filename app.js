@@ -365,22 +365,22 @@
 
   const FEATURED_DESSERTS = Object.freeze([
     {
-      title: 'Dubai Pistachio Cake',
-      description: 'Crisp kadaif, pistachio cream, and glossy chocolate texture.',
-      src: './images/photo_phistashko-cake.jpg',
-      alt: 'Close-up of Dubai pistachio cake with chocolate and pistachio cream',
+      title: 'Inside Sweet Fantasy',
+      description: 'Soft Santorini-blue light, chilled displays, and a calm boutique atmosphere in Sveti Vlas.',
+      src: './images/interier.png',
+      alt: 'Sweet Fantasy café interior with pastry display and seating',
     },
     {
-      title: 'Garash Chocolate Layers',
-      description: 'A rich Bulgarian classic with walnut layers and dark ganache.',
-      src: './images/photo_kutia32.jpg',
-      alt: 'Chocolate Garash cake close-up with layered texture',
+      title: 'Fresh Pastry Display',
+      description: 'Daily cakes, slices, and seasonal sweets arranged in the chilled showcase.',
+      src: './images/chjcjcake.png',
+      alt: 'Sweet Fantasy display case with cakes and dessert slices',
     },
     {
-      title: 'Custom Celebration Cakes',
-      description: 'Elegant handmade cakes for birthdays, weddings, and seaside holidays.',
-      src: './images/photo_BlackGolden_cake.jpg',
-      alt: 'Black and gold custom celebration cake by Sweet Fantasy',
+      title: 'Coffee & Terrace Moments',
+      description: 'Richard coffee, desserts, and relaxed seaside mornings at the table.',
+      src: './images/coolpic.png',
+      alt: 'Coffee and dessert table moment at Sweet Fantasy café',
     },
   ]);
 
@@ -388,8 +388,8 @@
     {
       title: 'Morning Espresso Ritual',
       description: 'A calm coffee stop before the beach walk.',
-      src: './images/twjcupsofcoffe.png',
-      alt: 'Two coffees served at Sweet Fantasy in Sveti Vlas',
+      src: './images/hero-cafes-richard-seaside.jpg',
+      alt: 'Cafés Richard coffee and pastry by the sea in Sveti Vlas',
       layout: 'wide',
     },
     {
