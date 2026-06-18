@@ -1334,6 +1334,7 @@
       beverageMenuTab: 'all',
       beverageMenuSearch: '',
       beverageIntensityScale: Object.freeze([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
+      beverageImageErrors: {},
       heroImage: HERO_IMAGE,
       catalogSkeletonSlots: CATALOG_SKELETON_SLOTS,
       newsSkeletonSlots: NEWS_SKELETON_SLOTS,
@@ -1800,6 +1801,29 @@
 
       isEspressoMenuItem(item) {
         return item && item.category === 'Espresso';
+      },
+
+      markBeverageImageError(itemId) {
+        this.beverageImageErrors = Object.assign({}, this.beverageImageErrors, { [itemId]: true });
+      },
+
+      hasBeverageImageError(itemId) {
+        return !!this.beverageImageErrors[itemId];
+      },
+
+      beverageProductInitials(item) {
+        var helpers = typeof window !== 'undefined' ? window.MenuImageFallbacks : null;
+        return helpers ? helpers.getProductInitials(item && item.name) : 'SF';
+      },
+
+      beverageFallbackGradient(item) {
+        var helpers = typeof window !== 'undefined' ? window.MenuImageFallbacks : null;
+        return helpers ? helpers.getFallbackGradient(item || {}) : 'linear-gradient(145deg, #f5f5f4, #e7e5e4)';
+      },
+
+      beverageFallbackTextColor(item) {
+        var helpers = typeof window !== 'undefined' ? window.MenuImageFallbacks : null;
+        return helpers ? helpers.getFallbackTextColor(item || {}) : '#292524';
       },
 
       bgn(value) {

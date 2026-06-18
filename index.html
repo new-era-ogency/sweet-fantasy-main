@@ -758,16 +758,44 @@
                   role="listitem"
                   class="group flex flex-col overflow-hidden rounded-[1.35rem] border border-slate-900/[0.06] bg-white shadow-[0_16px_48px_-32px_rgba(15,47,74,0.24)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-coffee/25 hover:shadow-[0_24px_56px_-30px_rgba(15,47,74,0.32)]"
                 >
-                  <div class="relative aspect-[4/3] overflow-hidden bg-neutral-50 p-4">
+                  <div class="relative aspect-[4/3] overflow-hidden bg-neutral-50">
                     <img
-                      class="h-full w-full object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-105"
+                      x-show="!hasBeverageImageError(item.id)"
+                      class="h-full w-full object-contain p-4 transition-transform duration-300 ease-out group-hover:scale-105"
                       loading="lazy"
                       decoding="async"
                       width="480"
                       height="360"
+                      referrerpolicy="no-referrer"
                       x-bind:src="item.imageUrl"
                       x-bind:alt="item.name"
+                      x-on:error="markBeverageImageError(item.id)"
                     />
+                    <div
+                      x-show="hasBeverageImageError(item.id)"
+                      x-cloak
+                      class="flex h-full w-full flex-col items-center justify-center gap-3 p-6 shadow-inner"
+                      x-bind:style="'background:' + beverageFallbackGradient(item)"
+                      role="img"
+                      x-bind:aria-label="item.name"
+                    >
+                      <div
+                        class="rounded-full border border-white/25 bg-white/10 p-3 backdrop-blur-sm"
+                        x-bind:style="'color:' + beverageFallbackTextColor(item)"
+                      >
+                        <svg x-show="isEspressoMenuItem(item)" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" />
+                        </svg>
+                        <svg x-show="!isEspressoMenuItem(item)" class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                        </svg>
+                      </div>
+                      <span
+                        class="font-display text-3xl font-semibold tracking-[0.18em]"
+                        x-bind:style="'color:' + beverageFallbackTextColor(item)"
+                        x-text="beverageProductInitials(item)"
+                      ></span>
+                    </div>
                   </div>
 
                   <div class="flex flex-1 flex-col border-t border-slate-900/[0.06] p-5">
@@ -2150,8 +2178,9 @@
   </div>
 
   <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.17/dist/lenis.min.js"></script>
+  <script defer src="data/menuImageFallbacks.js"></script>
   <script defer src="data/beverageMenu.js"></script>
-  <script defer src="app.js?v=7"></script>
+  <script defer src="app.js?v=8"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
 </body>
 </html>

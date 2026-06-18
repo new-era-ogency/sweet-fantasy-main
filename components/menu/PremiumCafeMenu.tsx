@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
 import { Coffee, Leaf, Search, Sparkles } from 'lucide-react';
 import { MENU_ITEMS, MENU_TABS } from '../../data/beverageMenu.js';
+import MenuProductImage from './MenuProductImage';
 
 type TabId = (typeof MENU_TABS)[number]['id'];
 
@@ -27,14 +27,6 @@ function MenuBadge({ item }: { item: (typeof MENU_ITEMS)[number] }) {
   return null;
 }
 
-/**
- * Premium café menu with product photography.
- * Add to next.config.js:
- * images: { remotePatterns: [
- *   { protocol: 'https', hostname: 'www.espresso-international.com' },
- *   { protocol: 'https', hostname: 'www.comptoirsrichard.fr' },
- * ]}
- */
 export default function PremiumCafeMenu() {
   const [activeTab, setActiveTab] = useState<TabId>('all');
   const [query, setQuery] = useState('');
@@ -69,7 +61,7 @@ export default function PremiumCafeMenu() {
             Premium Menu
           </h2>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-stone-600">
-            Espresso pods and herbal infusions with official product imagery — filter by category, intensity, or flavour.
+            Espresso pods and herbal infusions — filter by category, intensity, or flavour.
           </p>
         </div>
 
@@ -121,15 +113,7 @@ export default function PremiumCafeMenu() {
               role="listitem"
               className="group flex flex-col overflow-hidden rounded-[1.35rem] border border-stone-200/70 bg-white shadow-[0_16px_48px_-32px_rgba(28,25,23,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-200/70 hover:shadow-[0_24px_56px_-30px_rgba(120,53,15,0.22)]"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-neutral-50 p-4">
-                <Image
-                  src={item.imageUrl}
-                  alt={item.name}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 25vw"
-                  className="object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-105"
-                />
-              </div>
+              <MenuProductImage item={item} />
 
               <div className="flex flex-1 flex-col border-t border-stone-100 p-5">
                 <div className="flex items-start justify-between gap-3">
