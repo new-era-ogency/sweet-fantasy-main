@@ -353,17 +353,14 @@
   const CATALOG_SKELETON_SLOTS = Object.freeze([0, 1, 2]);
   const NEWS_SKELETON_SLOTS = Object.freeze([0, 1, 2, 3, 4, 5]);
 
-  /** Hero LCP image — optimized Unsplash (coffee & artisan pastry). */
+  /** Hero LCP image — Cafés Richard coffee & seaside pastry moment. */
   const HERO_IMAGE = Object.freeze({
-    src: 'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp',
-    srcset:
-      'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=640&q=80&fm=webp 640w, ' +
-      'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=960&q=80&fm=webp 960w, ' +
-      'https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w',
+    src: './images/hero-cafes-richard-seaside.jpg',
+    srcset: './images/hero-cafes-richard-seaside.jpg 861w',
     sizes: '(max-width: 1024px) 100vw, 58vw',
-    alt: 'Specialty coffee served beside artisan cake at a premium café and bakery',
-    width: 960,
-    height: 1200,
+    alt: 'Cafés Richard coffee and Sweet Fantasy pastry boxes by the sea in Sveti Vlas',
+    width: 861,
+    height: 1024,
   });
 
   const FEATURED_DESSERTS = Object.freeze([
@@ -1332,8 +1329,8 @@
       languages: LANGUAGES,
       i18n: i18n,
       cafeMenuCategories: CAFE_MENU_CATEGORIES,
-      beverageMenuItems: typeof window !== 'undefined' && window.BEVERAGE_MENU_ITEMS ? window.BEVERAGE_MENU_ITEMS : [],
-      beverageMenuTabs: typeof window !== 'undefined' && window.BEVERAGE_MENU_TABS ? window.BEVERAGE_MENU_TABS : [],
+      beverageMenuItems: typeof window !== 'undefined' && window.MENU_ITEMS ? window.MENU_ITEMS : [],
+      beverageMenuTabs: typeof window !== 'undefined' && window.MENU_TABS ? window.MENU_TABS : [],
       beverageMenuTab: 'all',
       beverageMenuSearch: '',
       beverageIntensityScale: Object.freeze([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
@@ -1782,12 +1779,27 @@
           .trim()
           .toLowerCase();
         var activeTab = this.beverageMenuTab;
+        var tabs = this.beverageMenuTabs || [];
+        var tabEntry = null;
+        for (var i = 0; i < tabs.length; i += 1) {
+          if (tabs[i].id === activeTab) {
+            tabEntry = tabs[i];
+            break;
+          }
+        }
+        var categoryFilter = tabEntry && tabEntry.category ? tabEntry.category : null;
         return (this.beverageMenuItems || []).filter(function (item) {
-          if (activeTab !== 'all' && item.category !== activeTab) return false;
+          if (categoryFilter && item.category !== categoryFilter) return false;
           if (!q) return true;
-          var haystack = [item.name, item.notes, item.brand, item.number ? 'no ' + item.number : ''].join(' ').toLowerCase();
+          var haystack = [item.name, item.details, item.category, item.number ? 'no ' + item.number : '']
+            .join(' ')
+            .toLowerCase();
           return haystack.indexOf(q) !== -1;
         });
+      },
+
+      isEspressoMenuItem(item) {
+        return item && item.category === 'Espresso';
       },
 
       bgn(value) {

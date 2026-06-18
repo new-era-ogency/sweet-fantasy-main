@@ -80,13 +80,10 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
   <link
     rel="preload"
     as="image"
-    href="https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp"
-    imagesrcset="https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=640&q=80&fm=webp 640w, https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=960&q=80&fm=webp 960w, https://images.unsplash.com/photo-1464305669706-b662d4d76812?auto=format&fit=crop&w=1200&q=80&fm=webp 1200w"
-    imagesizes="(max-width: 1024px) 100vw, 58vw"
+    href="./images/hero-cafes-richard-seaside.jpg"
     fetchpriority="high"
   />
   <link
@@ -720,7 +717,7 @@
                 <input
                   type="search"
                   x-model="beverageMenuSearch"
-                  placeholder="Search flavours, origins, or notes…"
+                  placeholder="Search by name or description…"
                   class="w-full rounded-2xl border border-slate-900/[0.08] bg-white/95 py-3.5 pl-11 pr-4 text-sm text-ink shadow-sm outline-none transition placeholder:text-slate-400 focus:border-brand-coffee/40 focus:shadow-[0_0_0_4px_rgba(139,94,60,0.12)]"
                 />
               </label>
@@ -733,10 +730,10 @@
                   role="tab"
                   x-bind:aria-selected="beverageMenuTab === tab.id"
                   x-on:click="setBeverageMenuTab(tab.id)"
-                  class="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold transition-all duration-300"
+                  class="inline-flex min-h-11 items-center gap-2 rounded-full px-5 text-sm font-semibold tracking-wide transition-all duration-300"
                   x-bind:class="beverageMenuTab === tab.id
                     ? 'bg-primary-ocean text-white shadow-lg shadow-slate-900/15'
-                    : 'bg-white/85 text-slate-600 ring-1 ring-slate-900/[0.08] hover:bg-white hover:text-ink'"
+                    : 'border border-slate-900/[0.08] bg-white/90 text-slate-600 hover:border-slate-900/20 hover:text-ink'"
                 >
                   <svg x-show="tab.id === 'espresso'" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" />
@@ -749,69 +746,64 @@
               </template>
             </div>
 
-            <div class="relative mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3" role="list">
+            <div class="relative mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" role="list">
               <template x-if="filteredBeverageMenuItems().length === 0">
                 <p class="col-span-full rounded-2xl border border-dashed border-slate-300 bg-white/75 px-6 py-12 text-center text-sm text-slate-500">
-                  No selections match your search. Try another flavour or reset the filters.
+                  No items match your search. Try another flavour or clear the filter.
                 </p>
               </template>
 
               <template x-for="item in filteredBeverageMenuItems()" :key="item.id">
                 <article
                   role="listitem"
-                  class="group relative flex flex-col overflow-hidden rounded-[1.5rem] border border-slate-900/[0.06] bg-white/95 p-5 shadow-[0_18px_50px_-36px_rgba(15,47,74,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-coffee/25 hover:shadow-[0_28px_60px_-34px_rgba(15,47,74,0.35)]"
+                  class="group flex flex-col overflow-hidden rounded-[1.35rem] border border-slate-900/[0.06] bg-white shadow-[0_16px_48px_-32px_rgba(15,47,74,0.24)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-coffee/25 hover:shadow-[0_24px_56px_-30px_rgba(15,47,74,0.32)]"
                 >
-                  <div class="flex items-start justify-between gap-3">
-                    <span class="inline-flex items-center gap-1.5 rounded-full bg-bg-cream px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-coffee">
-                      <svg x-show="item.category === 'espresso'" class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" />
-                      </svg>
-                      <svg x-show="item.category === 'tea'" class="h-3.5 w-3.5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                      </svg>
-                      <span x-text="item.brand"></span>
-                    </span>
-                    <span
-                      x-show="item.organic"
-                      class="rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-800 ring-1 ring-emerald-200/80"
-                    >
-                      Bio
-                    </span>
+                  <div class="relative aspect-[4/3] overflow-hidden bg-neutral-50 p-4">
+                    <img
+                      class="h-full w-full object-contain p-2 transition-transform duration-300 ease-out group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                      width="480"
+                      height="360"
+                      x-bind:src="item.imageUrl"
+                      x-bind:alt="item.name"
+                    />
                   </div>
 
-                  <h4 class="mt-4 font-display text-2xl font-semibold leading-tight text-primary-ocean transition-colors group-hover:text-ink" x-text="item.name"></h4>
-                  <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600" x-text="item.notes"></p>
+                  <div class="flex flex-1 flex-col border-t border-slate-900/[0.06] p-5">
+                    <div class="flex items-start justify-between gap-3">
+                      <span class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                        <svg x-show="isEspressoMenuItem(item)" class="h-3.5 w-3.5 text-brand-coffee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M10 2v2" /><path d="M14 2v2" /><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1" /><path d="M6 2v2" />
+                        </svg>
+                        <svg x-show="!isEspressoMenuItem(item)" class="h-3.5 w-3.5 text-emerald-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" /><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
+                        </svg>
+                        <span x-text="item.category"></span>
+                      </span>
 
-                  <div class="mt-5 border-t border-slate-900/[0.06] pt-4">
-                    <template x-if="typeof item.intensity === 'number'">
-                      <div class="flex flex-wrap items-center gap-2" x-bind:aria-label="'Intensity ' + item.intensity + ' of 10'">
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-coffee/80">Intensity</span>
-                        <div class="flex gap-1">
-                          <template x-for="dot in beverageIntensityScale" :key="item.id + '-dot-' + dot">
-                            <span
-                              class="h-1.5 w-1.5 rounded-full transition-colors"
-                              x-bind:class="dot <= item.intensity ? 'bg-brand-coffee' : 'bg-brand-coffee/15'"
-                            ></span>
-                          </template>
-                        </div>
-                        <span class="text-xs font-bold tabular-nums text-brand-coffee" x-text="item.intensity"></span>
-                      </div>
-                    </template>
-                    <template x-if="typeof item.number === 'number'">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-800/80">
-                        Collection No. <span x-text="item.number"></span>
-                      </p>
-                    </template>
-                    <template x-if="typeof item.intensity !== 'number' && typeof item.number !== 'number'">
-                      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Signature roast</p>
-                    </template>
+                      <span
+                        x-show="typeof item.intensity === 'number'"
+                        class="inline-flex shrink-0 items-center rounded-full bg-amber-50 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-900 ring-1 ring-amber-200/80"
+                        x-text="'Intensity: ' + item.intensity + '/10'"
+                      ></span>
+                      <span
+                        x-show="typeof item.number === 'number'"
+                        class="inline-flex shrink-0 items-center rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-900 ring-1 ring-emerald-200/80"
+                      >
+                        No. <span x-text="item.number"></span>
+                      </span>
+                    </div>
+
+                    <h4 class="mt-3 font-display text-xl font-semibold leading-snug tracking-tight text-primary-ocean transition-colors duration-300 group-hover:text-ink" x-text="item.name"></h4>
+                    <p class="mt-2 flex-1 text-sm leading-relaxed text-slate-600" x-text="item.details"></p>
                   </div>
                 </article>
               </template>
             </div>
 
-            <p class="relative mt-6 text-center text-xs text-slate-500">
-              Showing <span x-text="filteredBeverageMenuItems().length"></span> of <span x-text="beverageMenuItems.length"></span> selections
+            <p class="relative mt-8 text-center text-xs tracking-wide text-slate-500">
+              Showing <span x-text="filteredBeverageMenuItems().length"></span> of <span x-text="beverageMenuItems.length"></span> items
             </p>
           </div>
         </div>
@@ -832,7 +824,7 @@
             <div class="grid gap-5 sm:grid-cols-2 lg:col-span-8">
               <template x-for="item in coffeeMoments" :key="item.title">
                 <article class="group overflow-hidden rounded-[1.75rem] border border-slate-900/[0.06] bg-bg-cream shadow-[0_24px_64px_-40px_rgba(15,47,74,0.45)] transition-all duration-300 ease-in-out hover:-translate-y-1">
-                  <div class="relative overflow-hidden" :class="item.layout === 'wide' ? 'aspect-[5/4]' : 'aspect-[4/5]'">
+                  <div class="relative overflow-hidden sf-media" :class="item.layout === 'wide' ? 'aspect-[5/4]' : 'aspect-[4/5]'">
                     <img
                       class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-[1.04]"
                       loading="lazy"
@@ -2159,7 +2151,7 @@
 
   <script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.17/dist/lenis.min.js"></script>
   <script defer src="data/beverageMenu.js"></script>
-  <script defer src="app.js?v=5"></script>
+  <script defer src="app.js?v=7"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
 </body>
 </html>
