@@ -410,14 +410,12 @@
     { category: 'cakes', src: './images/photo_Graduation-rect.jpg', alt: 'Graduation cake with berries and macarons', title: 'Celebration cakes' },
     { category: 'cakes', src: './images/photo_white-S1812.jpg', alt: 'White floral cake with delicate hand-finished details', title: 'Floral details' },
     { category: 'desserts', src: './images/photo_vegan-fruit.jpg', alt: 'Vegan fruit cake with fresh toppings', title: 'Fruit freshness' },
-    { category: 'team', src: './images/menuCffes.png', alt: 'Coffee menu board prepared for guests', title: 'Behind the bar' },
-    { category: 'display', src: './images/menuDrinks.png', alt: 'Colorful drinks menu display', title: 'Cold drinks' },
   ]);
 
   const DISPLAY_CASE_PHOTOS = Object.freeze([
     { src: './images/chjcjcake.png', alt: 'Desserts arranged in the Sweet Fantasy display case', title: 'Daily dessert case' },
     { src: './images/Screenshot 2026-04-30 220450.png', alt: 'Hand-piped colorful sweets and macarons', title: 'Hand-piped sweets' },
-    { src: './images/menuofdrinks.png', alt: 'Drinks board with summer café options', title: 'Summer drinks' },
+    { src: './images/hero-cafes-richard-seaside.jpg', alt: 'Cafés Richard coffee and pastry by the sea', title: 'Seaside coffee moment' },
   ]);
 
   const REVIEWS = Object.freeze([
@@ -757,11 +755,7 @@
         { src: './images/Screenshot 2026-04-30 220450.png', caption: 'Hand-piped sweets — colourful macaron moments.' },
       ],
 
-      menuImages: [
-        { src: './images/menuCffes.png', caption: 'Coffee menu board — espresso, latte, cappuccino, and Raf.' },
-        { src: './images/menuDrinks.png', caption: 'Drinks overview — lemonade, yoghurt series, iced tea.' },
-        { src: './images/menuofdrinks.png', caption: 'More drinks — milkshakes, smoothies, iced matcha.' },
-      ],
+      menuImages: [],
 
       secCoffee: 'Richard coffee',
       secTea: 'Richard tea',
@@ -959,11 +953,7 @@
         { src: './images/Screenshot 2026-04-30 220450.png', caption: 'Ръчно украсени сладки — марички в редици.' },
       ],
 
-      menuImages: [
-        { src: './images/menuCffes.png', caption: 'Менюто на кафето — еспресо, лате, капучино и раф.' },
-        { src: './images/menuDrinks.png', caption: 'Напитки — лимонади, студен чай и йогурт серии.' },
-        { src: './images/menuofdrinks.png', caption: 'Допълнителни напитки — смутита, млека с плодове, леден матча.' },
-      ],
+      menuImages: [],
 
       secCoffee: 'Кафе Richard',
       secTea: 'Чай Richard',
@@ -1162,11 +1152,7 @@
         { src: './images/Screenshot 2026-04-30 220450.png', caption: 'Печиво й мигдалеві смаколики — палітра смаків.' },
       ],
 
-      menuImages: [
-        { src: './images/menuCffes.png', caption: 'Меню кави на дошці — еспресо, лате, капучіно й раф.' },
-        { src: './images/menuDrinks.png', caption: 'Лінійка напоїв — лимонади, холодний чай, серія з йогуртом.' },
-        { src: './images/menuofdrinks.png', caption: 'Ще напої — смузі, молочні коктейлі, льодяний матча.' },
-      ],
+      menuImages: [],
 
       secCoffee: 'Кава Richard',
       secTea: 'Чай Richard',
